@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Step3D.Lab</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="logo">Step3D.Lab</div>
+        <nav>
+            <ul>
+                <li><a href="#about">О нас</a></li>
+                <li><a href="#articles">Статьи</a></li>
+                <li><a href="#courses">Курсы</a></li>
+                <li><a href="#community">Сообщество</a></li>
+                <li><a href="#contact">Контакты</a></li>
+            </ul>
+        </nav>
+        <button id="loginBtn">Войти / Регистрация</button>
+    </header>
+    <main>
+        <section id="hero">
+            <div class="hero-content">
+                <h1>Добро пожаловать в Step3D.Lab</h1>
+                <p>Сообщество 3D-печати и реверсивного инжиниринга.</p>
+                <button onclick="scrollToSection('about')">Узнать больше</button>
+            </div>
+        </section>
+        <section id="about" data-aos="fade-right">
+            <h2>О нас</h2>
+            <p>Мы объединяем экспертов и новичков в области аддитивных технологий.</p>
+            <div class="about-image">
+                <img src="https://via.placeholder.com/600x300" alt="Step3D Infographic">
+            </div>
+        </section>
+        <section id="articles" data-aos="fade-up">
+            <h2>Статьи</h2>
+            <div id="articlesContainer">
+                <!-- Карточки статей будут добавлены через JS -->
+            </div>
+        </section>
+        <section id="courses" data-aos="fade-left">
+            <h2>Курсы</h2>
+            <p>Присоединяйтесь к нашему курсу "Курс молодого 3D-мейкера"!</p>
+            <button>Записаться</button>
+        </section>
+        <section id="community" data-aos="fade-up">
+            <h2>Сообщество</h2>
+            <p>Форум, рейтинги и профили участников.</p>
+        </section>
+    </main>
+    <footer id="contact">
+        <h2>Контакты</h2>
+        <p>Email: info@step3d.lab</p>
+        <p>Телефон: +7 (123) 456-78-90</p>
+    </footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
+<footer id="contact">
+  <div class="footer-container">
+    <div class="footer-section">
+      <h3>О нас</h3>
+      <ul>
+        <li><a href="#">Компания</a></li>
+        <li><a href="#">Новости</a></li>
+        <li><a href="#">Контакты</a></li>
+      </ul>
+    </div>
+    <div class="footer-section">
+      <h3>Продукты и услуги</h3>
+      <ul>
+        <li><a href="#">Продукты</a></li>
+        <li><a href="#">Услуги</a></li>
+        <li><a href="#">Поддержка</a></li>
+      </ul>
+    </div>
+    <div class="footer-section">
+      <h3>Ресурсы</h3>
+      <ul>
+        <li><a href="#">Блог</a></li>
+        <li><a href="#">Документация</a></li>
+        <li><a href="#">FAQ</a></li>
+      </ul>
+    </div>
+    <div class="footer-section">
+      <h3>Социальные сети</h3>
+      <ul>
+        <li><a href="#" class="social-link">Twitter</a></li>
+        <li><a href="#" class="social-link">Facebook</a></li>
+        <li><a href="#" class="social-link">LinkedIn</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-copyright">
+    &copy; 2023 Step3D.Lab. Все права защищены.
+  </div>
+</footer>
