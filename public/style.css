@@ -12,11 +12,6 @@ header {
   text-align: center;
 }
 
-main {
-  text-align: center;
-  margin-top: 50px;
-}
-
 footer {
   background-color: #333;
   color: white;
@@ -26,4 +21,3 @@ footer {
   width: 100%;
   bottom: 0;
 }
-
