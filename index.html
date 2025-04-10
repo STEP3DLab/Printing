@@ -3,20 +3,22 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Retro Blog — Главная</title>
+  <title>Step3D — Главная</title>
   <!-- Подключаем стили -->
   <link rel="stylesheet" href="css/style.css" />
-  <!-- Подключаем шрифт (пример: PT Sans с поддержкой кириллицы) -->
+  <!-- Подключаем шрифт Montserrat (поддержка кириллицы) -->
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;700&display=swap&subset=cyrillic" 
-        rel="stylesheet">
+  <link 
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap&subset=cyrillic" 
+    rel="stylesheet"
+  >
 </head>
 <body>
   <!-- Шапка сайта -->
   <header class="site-header">
     <nav class="navbar">
       <div class="logo">
-        <a href="index.html">Retro<span>Blog</span></a>
+        <a href="index.html">Step<span>3D</span></a>
       </div>
       <ul class="nav-links">
         <li><a href="index.html" class="active">home</a></li>
@@ -31,10 +33,14 @@
   <!-- Основной контент -->
   <main class="container">
     <section class="hero">
-      <!-- Добавляем новую картинку-аватар -->
-      <img src="images/avatar.png" alt="Avatar" class="avatar" />
-      <h1>Добро пожаловать на Retro Blog!</h1>
-      <p>Здесь вы найдёте информацию о моих курсах, статьях и других проектах.</p>
+      <!-- Аватар по ссылке с GitHub -->
+      <img 
+        src="https://github.com/STEP3DLab/Printing/blob/main/images/avatar.png?raw=true" 
+        alt="Avatar" 
+        class="avatar" 
+      />
+      <h1>Добро пожаловать в Step3D!</h1>
+      <p>Здесь вы найдёте информацию о наших курсах, статьях и других проектах.</p>
     </section>
 
     <section class="projects">
@@ -60,11 +66,11 @@
 
   <!-- Подвал -->
   <footer class="site-footer">
-    <p>© 2025 Retro Blog. All rights reserved.</p>
+    <p>© 2025 Step3D. All rights reserved.</p>
     <p class="quote">"The symphony of silence plays best when butterflies wear tiny boots."</p>
   </footer>
 
-  <!-- Контейнер для анимации (в самом низу, под футером) -->
+  <!-- Контейнер для анимации (в самом низу) -->
   <div class="canvas-container">
     <canvas id="mouseEffectCanvas"></canvas>
   </div>
@@ -108,7 +114,6 @@
       draw() {
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        // Используем оранжевый оттенок (или подставьте var(--accent-color))
         ctx.fillStyle = `rgba(243, 86, 38, ${this.alpha})`;
         ctx.fill();
       }
