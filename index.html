@@ -4,8 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Retro Blog — Главная</title>
-  <!-- Подключаем CSS -->
+  <!-- Подключаем стили -->
   <link rel="stylesheet" href="css/style.css" />
+  <!-- Подключаем шрифт (пример: PT Sans с поддержкой кириллицы) -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;700&display=swap&subset=cyrillic" 
+        rel="stylesheet">
 </head>
 <body>
   <!-- Шапка сайта -->
@@ -15,17 +19,20 @@
         <a href="index.html">Retro<span>Blog</span></a>
       </div>
       <ul class="nav-links">
-        <li><a href="index.html">home</a></li>
+        <li><a href="index.html" class="active">home</a></li>
         <li><a href="courses.html">courses</a></li>
         <li><a href="blog.html">blog</a></li>
       </ul>
+      <!-- Кнопка переключения темы -->
+      <button id="theme-toggle" class="theme-toggle">Смена темы</button>
     </nav>
   </header>
 
   <!-- Основной контент -->
   <main class="container">
     <section class="hero">
-      <img src="images/avatar.jpg" alt="Your Avatar" class="avatar">
+      <!-- Добавляем новую картинку-аватар -->
+      <img src="images/avatar.png" alt="Avatar" class="avatar" />
       <h1>Добро пожаловать на Retro Blog!</h1>
       <p>Здесь вы найдёте информацию о моих курсах, статьях и других проектах.</p>
     </section>
@@ -34,12 +41,11 @@
       <h2>Проекты</h2>
       <div class="project-item">
         <h3>Retro Website</h3>
-        <p>Небольшое описание вашего проекта. Возможно, ссылка на GitHub.</p>
+        <p>Небольшое описание вашего проекта. Ссылка на GitHub или портфолио.</p>
         <div class="tags">
           <span>html</span><span>css</span><span>retro</span>
         </div>
       </div>
-      <!-- Можно добавить другие проекты -->
     </section>
 
     <section class="articles">
@@ -49,14 +55,87 @@
         <p>Как создать самый простой HTML-файл? Разбираемся с тэгами и структурой.</p>
         <small>Dec 18, 2024 • 4 мин чтения</small>
       </div>
-      <!-- Добавляйте другие статьи -->
     </section>
   </main>
 
-  <!-- Нижняя часть сайта (подвал) -->
+  <!-- Подвал -->
   <footer class="site-footer">
     <p>© 2025 Retro Blog. All rights reserved.</p>
     <p class="quote">"The symphony of silence plays best when butterflies wear tiny boots."</p>
   </footer>
+
+  <!-- Контейнер для анимации (в самом низу, под футером) -->
+  <div class="canvas-container">
+    <canvas id="mouseEffectCanvas"></canvas>
+  </div>
+
+  <!-- Скрипты: переключение темы и анимация -->
+  <script>
+    /* ====== Переключение темы (dark/light) ====== */
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const body = document.body;
+    themeToggleBtn.addEventListener('click', () => {
+      body.classList.toggle('light');
+    });
+
+    /* ====== Анимация (реакция на движение мыши) ====== */
+    const canvas = document.getElementById('mouseEffectCanvas');
+    const ctx = canvas.getContext('2d');
+    let w, h;
+
+    function resizeCanvas() {
+      w = canvas.width = canvas.offsetWidth;
+      h = canvas.height = canvas.offsetHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    const particles = [];
+    class Particle {
+      constructor(x, y) {
+        this.x = x;
+        this.y = y;
+        this.radius = Math.random() * 8 + 2;
+        this.alpha = 1;
+        this.speedX = (Math.random() - 0.5) * 2;
+        this.speedY = (Math.random() - 0.5) * 2;
+      }
+      update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+        this.alpha -= 0.01;
+      }
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        // Используем оранжевый оттенок (или подставьте var(--accent-color))
+        ctx.fillStyle = `rgba(243, 86, 38, ${this.alpha})`;
+        ctx.fill();
+      }
+    }
+
+    canvas.addEventListener('mousemove', (e) => {
+      const rect = canvas.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      for (let i = 0; i < 3; i++) {
+        particles.push(new Particle(x, y));
+      }
+    });
+
+    function animate() {
+      requestAnimationFrame(animate);
+      ctx.clearRect(0, 0, w, h);
+      for (let i = 0; i < particles.length; i++) {
+        particles[i].update();
+        particles[i].draw();
+        if (particles[i].alpha <= 0) {
+          particles.splice(i, 1);
+          i--;
+        }
+      }
+    }
+    animate();
+  </script>
 </body>
 </html>
