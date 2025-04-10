@@ -3,9 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Step3D — Статья</title>
-
+  <title>Step3D.Lab — Статья</title>
+  
+  <!-- Подключаем стили -->
   <link rel="stylesheet" href="css/style.css">
+  <!-- Подключаем Montserrat -->
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link 
     href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap&subset=cyrillic" 
@@ -13,90 +15,100 @@
   >
 </head>
 <body>
-  <!-- Sticky header -->
+  <!-- Прогресс-бар прокрутки -->
+  <div id="progress-bar"></div>
+  
+  <!-- Шапка (sticky) -->
   <header class="site-header sticky-header">
     <nav class="navbar">
       <div class="logo">
-        <a href="index.html">Step<span>3D</span></a>
+        <a href="index.html">Step3D.<span style="color: var(--accent-color);">Lab</span></a>
       </div>
       <ul class="nav-links">
-        <li><a href="index.html">home</a></li>
+        <li><a href="index.html">Дом</a></li>
         <li class="dropdown">
-          <a href="courses.html" class="dropbtn">courses ▾</a>
+          <a href="courses.html" class="dropbtn">Курсы ▾</a>
           <div class="dropdown-content">
             <a href="courses.html#R22_02">R22_02 Reverse Eng.</a>
             <a href="courses.html#html-course">HTML/CSS Basics</a>
             <a href="courses.html#other-courses">Другие курсы</a>
           </div>
         </li>
-        <li><a href="blog.html" class="active">blog</a></li>
-        <li><a href="about.html">about</a></li>
+        <li><a href="blog.html">Блог</a></li>
+        <li><a href="about.html">Команда</a></li>
       </ul>
       <div class="theme-toggle" id="theme-toggle" title="Переключить тему">
         <span class="theme-icon" id="theme-icon"></span>
       </div>
     </nav>
   </header>
-
-  <!-- Прогресс-бар прокрутки (17) -->
-  <div id="progress-bar"></div>
-
+  
   <main class="container">
-    <!-- Хлебные крошки (16) -->
+    <!-- Хлебные крошки (breadcrumbs) -->
     <nav class="breadcrumbs text-limited">
-      <a href="index.html">Главная</a> → 
+      <a href="index.html">Дом</a> → 
       <a href="blog.html">Блог</a> → 
       <span>Статья</span>
     </nav>
-
-    <!-- Кнопка «Назад» (8) -->
+    
+    <!-- Кнопка "Назад к блогу" -->
     <div class="back-link text-limited">
       <a href="blog.html" class="btn">&larr; Назад к блогу</a>
     </div>
-
+    
+    <!-- Основной текст статьи -->
     <article class="blog-article text-limited">
       <h1>Основы HTML</h1>
       <p class="post-date">Dec 18, 2024 • 4 мин</p>
-
+      
       <p>
-        HTML (HyperText Markup Language) — основа всех веб-страниц...
+        HTML (HyperText Markup Language) – основа всех веб-страниц. Он используется для структурирования контента в интернете. 
+        Даже при использовании современных фреймворков важно знать базовые принципы работы с HTML.
       </p>
-
+      
       <h2>Структура HTML</h2>
       <pre><code>
-      &lt;!DOCTYPE html&gt;
-      &lt;html lang="ru"&gt;
-        &lt;head&gt;
-          &lt;meta charset="UTF-8"&gt;
-          &lt;title&gt;Мой первый сайт&lt;/title&gt;
-        &lt;/head&gt;
-        &lt;body&gt;
-          &lt;h1&gt;Hello World!&lt;/h1&gt;
-        &lt;/body&gt;
-      &lt;/html&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html lang="ru"&gt;
+  &lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;Мой первый сайт&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1&gt;Привет, мир!&lt;/h1&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
       </code></pre>
-
-      <p>... и так далее ...</p>
+      
+      <p>
+        Данный пример демонстрирует базовую структуру HTML-документа. Отсюда можно развивать тему, добавляя элементы страницы и разделы, стилизуя их по вашему желанию.
+      </p>
+      
+      <!-- Дополнительный контент статьи -->
+      <p>
+        Продолжение статьи может содержать подробное описание тегов, атрибутов и принципов семантики HTML. 
+        Эта информация полезна как для начинающих, так и для опытных разработчиков, желающих освежить базовые знания.
+      </p>
     </article>
   </main>
-
+  
+  <!-- Подвал -->
   <footer class="site-footer text-limited">
-    <p>© 2025 Step3D. All rights reserved.</p>
+    <p>© 2025 Step3D.Lab. All rights reserved.</p>
   </footer>
-
+  
+  <!-- Контейнер для Canvas-анимации -->
   <div class="canvas-container">
     <canvas id="mouseEffectCanvas"></canvas>
   </div>
-
+  
+  <!-- Скрипты: переключение темы, Canvas-анимация, прогресс-бар -->
   <script>
-    /* Подключаем тему + canvas, 
-       но добавим тут прогресс-бар прокрутки (17). */
-
+    /* Переключение темы */
     const body = document.body;
     const themeToggleBtn = document.getElementById('theme-toggle');
     const themeIcon = document.getElementById('theme-icon');
-
-    // Восстанавливаем тему из localStorage
+    
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme) {
       body.classList.toggle('light', savedTheme === 'light');
@@ -104,30 +116,29 @@
     } else {
       themeIcon.textContent = '☀️';
     }
-
+    
     themeToggleBtn.addEventListener('click', () => {
       body.classList.toggle('light');
       const isLight = body.classList.contains('light');
       themeIcon.textContent = isLight ? '🌙' : '☀️';
       localStorage.setItem('theme', isLight ? 'light' : 'dark');
     });
-
-    // Canvas-анимация (скопируем упрощённый вариант)
+    
+    /* Canvas-анимация */
     const canvas = document.getElementById('mouseEffectCanvas');
     const ctx = canvas.getContext('2d');
     let w, h;
-
+    
     function resizeCanvas() {
       w = canvas.width = canvas.offsetWidth;
       h = canvas.height = canvas.offsetHeight;
     }
     window.addEventListener('resize', resizeCanvas);
     resizeCanvas();
-
+    
     const particles = [];
-
     class Particle {
-      constructor(x, y, color) {
+      constructor(x, y, color='243,86,38') {
         this.x = x;
         this.y = y;
         this.radius = Math.random() * 8 + 2;
@@ -148,17 +159,27 @@
         ctx.fill();
       }
     }
-
+    
     canvas.addEventListener('mousemove', (e) => {
       if (window.innerWidth < 768) return;
       const rect = canvas.getBoundingClientRect();
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
       for (let i = 0; i < 3; i++) {
-        particles.push(new Particle(x, y, '243,86,38'));
+        particles.push(new Particle(x, y));
       }
     });
-
+    
+    canvas.addEventListener('click', (e) => {
+      if (window.innerWidth < 768) return;
+      const rect = canvas.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      for (let i = 0; i < 5; i++) {
+        particles.push(new Particle(x, y, '0,200,255'));
+      }
+    });
+    
     function animate() {
       requestAnimationFrame(animate);
       ctx.clearRect(0, 0, w, h);
@@ -172,9 +193,15 @@
       }
     }
     animate();
-
-    // Прогресс-бар прокрутки
+    
+    /* Прогресс-бар прокрутки */
     const progressBar = document.getElementById('progress-bar');
-
     window.addEventListener('scroll', () => {
       const scrollTop = window.scrollY;
+      const docHeight = document.body.scrollHeight - window.innerHeight;
+      const progress = (scrollTop / docHeight) * 100;
+      progressBar.style.width = progress + '%';
+    });
+  </script>
+</body>
+</html>
