@@ -3,42 +3,42 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Step3D — Главная</title>
+  <title>Step3D.Lab — Главная</title>
 
   <!-- Подключаем стили -->
   <link rel="stylesheet" href="css/style.css" />
-  <!-- Подключаем Montserrat (с display=swap для ускоренной загрузки) -->
+  <!-- Подключаем Montserrat (display=swap для ускорения загрузки) -->
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link 
-    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap&subset=cyrillic" 
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap&subset=cyrillic"
     rel="stylesheet"
   >
 </head>
 <body>
-  <!-- Шапка (sticky) -->
+  <!-- Шапка сайта (sticky-header) -->
   <header class="site-header sticky-header">
     <nav class="navbar">
+      <!-- Логотип: "Step3D.Lab", где "Lab" выделено -->
       <div class="logo">
-        <a href="index.html">Step<span>3D</span></a>
+        <a href="index.html">Step3D.<span style="color: var(--accent-color);">Lab</span></a>
       </div>
 
+      <!-- Навигация -->
       <ul class="nav-links">
-        <!-- Активный пункт — главная -->
-        <li><a href="index.html" class="active">home</a></li>
-        <!-- Пример выпадающего меню для «courses» -->
+        <li><a href="index.html" class="active">Дом</a></li>
         <li class="dropdown">
-          <a href="courses.html" class="dropbtn">courses ▾</a>
+          <a href="courses.html" class="dropbtn">Курсы ▾</a>
           <div class="dropdown-content">
             <a href="courses.html#R22_02">R22_02 Reverse Eng.</a>
             <a href="courses.html#html-course">HTML/CSS Basics</a>
             <a href="courses.html#other-courses">Другие курсы</a>
           </div>
         </li>
-        <li><a href="blog.html">blog</a></li>
-        <li><a href="about.html">about</a></li>
+        <li><a href="blog.html">Блог</a></li>
+        <li><a href="about.html">Команда</a></li>
       </ul>
 
-      <!-- Кнопка переключения темы с иконками -->
+      <!-- Переключатель темы -->
       <div class="theme-toggle" id="theme-toggle" title="Переключить тему">
         <span class="theme-icon" id="theme-icon"></span>
       </div>
@@ -49,40 +49,39 @@
   <main class="container">
     <!-- Hero-секция -->
     <section class="hero text-limited">
-      <!-- lazy-loading картинки -->
-      <img
+      <!-- lazy-loading для аватара -->
+      <img 
         src="https://github.com/STEP3DLab/Printing/blob/main/images/avatar.png?raw=true"
         alt="Avatar"
         class="avatar"
         loading="lazy"
       />
-      <h1>Добро пожаловать в Step3D!</h1>
-      <p>Здесь вы найдёте информацию о наших курсах, статьях и других проектах. 
-        Наша цель – продвигать аддитивные технологии, реверсивный инжиниринг и промышленный дизайн.</p>
+      <h1>Добро пожаловать в Step3D.Lab!</h1>
+      <p>Здесь вы узнаете всё про аддитивные технологии, реверсивный инжиниринг и промышленный дизайн.</p>
     </section>
 
-    <!-- CTA-блок: призыв к действию -->
-    <section class="cta-block">
-      <h2>Хотите узнать больше?</h2>
-      <p>Скачайте нашу брошюру по всем курсам и возможностям обучения в Step3D.</p>
-      <a href="brochure.pdf" class="btn cta-btn" download>Скачать программу (PDF)</a>
+    <!-- Блок CTA с комиксом -->
+    <section class="cta-block text-limited">
+      <h2>Читайте наш комикс!</h2>
+      <p>Приключения в мире аддитивных технологий и Step3D в стиле Гибли — уникальная история, которая вдохновляет!</p>
+      <!-- Пример кнопки (ссылка на страницу или PDF/видео комикса) -->
+      <a href="ghibli_comic.pdf" class="btn cta-btn" download>Посмотреть комикс</a>
     </section>
 
-    <!-- Раздел проектов -->
+    <!-- Раздел для Telegram-канала -->
     <section class="projects text-limited">
-      <h2>Проекты</h2>
+      <h2>Наш Telegram-канал</h2>
       <div class="project-item">
-        <h3>Retro Website</h3>
-        <p>Небольшое описание вашего проекта. Ссылка на GitHub или портфолио. 
-          Этот проект демонстрирует классический «ретро»-стиль веб-дизайна.</p>
+        <h3>Step3D.Lab в Telegram</h3>
+        <p>Подписывайтесь на наш Telegram-канал, где мы делимся новостями, статьями и идеями. Там вы узнаете всё про <em>htmlcssretro</em> и современные технологии веб-разработки в области аддитивного производства.</p>
         <div class="tags">
-          <span>html</span><span>css</span><span>retro</span>
+          <span>#htmlcssretro</span>
         </div>
+        <p>Присоединяйтесь здесь: <a href="https://t.me/STEP_3D_Lab" target="_blank">https://t.me/STEP_3D_Lab</a></p>
       </div>
-      <!-- Добавляйте свои проекты при необходимости -->
     </section>
 
-    <!-- Раздел последних статей -->
+    <!-- Раздел статей -->
     <section class="articles text-limited">
       <h2>Последние статьи</h2>
       <div class="article-preview">
@@ -94,33 +93,30 @@
     </section>
   </main>
 
-  <!-- Подвал -->
+  <!-- Подвал сайта -->
   <footer class="site-footer text-limited">
-    <p>© 2025 Step3D. All rights reserved.</p>
-    <p class="quote">
-      "The symphony of silence plays best when butterflies wear tiny boots."
-    </p>
+    <p>© 2025 Step3D.Lab. All rights reserved.</p>
+    <p class="quote">"The symphony of silence plays best when butterflies wear tiny boots."</p>
   </footer>
 
-  <!-- Canvas-анимация в самом низу -->
+  <!-- Контейнер для анимации (canvas) в самом низу -->
   <div class="canvas-container">
     <canvas id="mouseEffectCanvas"></canvas>
   </div>
 
-  <!-- Скрипты: тема, анимация, отключение/упрощение анимации на мобильных -->
+  <!-- Скрипты: переключение темы и Canvas-анимация -->
   <script>
-    /* ==================== (6), (7) Улучшенное переключение темы с иконками и плавным переходом ==================== */
+    /* ====== Переключение темы с сохранением в localStorage ====== */
     const body = document.body;
     const themeToggleBtn = document.getElementById('theme-toggle');
     const themeIcon = document.getElementById('theme-icon');
 
-    // Изначально проверяем, не выбрана ли тема в localStorage
+    // Восстанавливаем тему из localStorage
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme) {
       body.classList.toggle('light', savedTheme === 'light');
       themeIcon.textContent = savedTheme === 'light' ? '🌙' : '☀️';
     } else {
-      // По умолчанию ночная тема, иконка — "солнышко" (клик => светлая тема)
       themeIcon.textContent = '☀️';
     }
 
@@ -131,7 +127,7 @@
       localStorage.setItem('theme', isLight ? 'light' : 'dark');
     });
 
-    /* ==================== (24) Улучшенная анимация canvas ==================== */
+    /* ====== Canvas-анимация ====== */
     const canvas = document.getElementById('mouseEffectCanvas');
     const ctx = canvas.getContext('2d');
     let w, h;
@@ -144,9 +140,8 @@
     resizeCanvas();
 
     const particles = [];
-
     class Particle {
-      constructor(x, y, color) {
+      constructor(x, y, color = '243,86,38') {
         this.x = x;
         this.y = y;
         this.radius = Math.random() * 8 + 2;
@@ -168,17 +163,41 @@
       }
     }
 
-    // Генерируем частицы при движении мыши
+    // Генерация частиц при движении мыши
     canvas.addEventListener('mousemove', (e) => {
-      // Если мобильное устройство, можно не генерировать кучу частиц
-      if (window.innerWidth < 768) return; // (13) Отключаем на мобильных
+      if (window.innerWidth < 768) return;
       const rect = canvas.getBoundingClientRect();
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
       for (let i = 0; i < 3; i++) {
-        // (10) accent-color: 243,86,38 (оранжевый)
-        particles.push(new Particle(x, y, '243,86,38'));
+        particles.push(new Particle(x, y));
       }
     });
 
-    // Также добавим реакцию на
+    // При клике создаём частицы другого цвета
+    canvas.addEventListener('click', (e) => {
+      if (window.innerWidth < 768) return;
+      const rect = canvas.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      for (let i = 0; i < 5; i++) {
+        particles.push(new Particle(x, y, '0,200,255'));
+      }
+    });
+
+    function animate() {
+      requestAnimationFrame(animate);
+      ctx.clearRect(0, 0, w, h);
+      for (let i = 0; i < particles.length; i++) {
+        particles[i].update();
+        particles[i].draw();
+        if (particles[i].alpha <= 0) {
+          particles.splice(i, 1);
+          i--;
+        }
+      }
+    }
+    animate();
+  </script>
+</body>
+</html>
