@@ -2,49 +2,25 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Step3D.Lab — Главная</title>
-  
-  <!-- Подключаем стили -->
+
+  <!-- Стили -->
   <link rel="stylesheet" href="css/style.css" />
-  <!-- Подключаем шрифт Montserrat с display=swap для ускоренной загрузки -->
+  <!-- Montserrat -->
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link 
     href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap&subset=cyrillic"
     rel="stylesheet"
   >
-  
-  <style>
-    /* Дополнительный стиль для tooltip CTA (интерактивная обратная связь) */
-    #cta-tooltip {
-      position: fixed;
-      bottom: 100px;
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: var(--accent-color);
-      color: var(--bg-color);
-      padding: 0.75rem 1rem;
-      border-radius: 4px;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.4s ease;
-      z-index: 1500;
-      font-size: 0.9rem;
-    }
-    #cta-tooltip.show {
-      opacity: 1;
-    }
-  </style>
 </head>
 <body>
-  <!-- Шапка (sticky-header) -->
+  <!-- Шапка -->
   <header class="site-header sticky-header">
     <nav class="navbar">
-      <!-- Логотип: "Step3D.Lab", слово Lab выделено оранжевым -->
       <div class="logo">
         <a href="index.html">Step3D.<span style="color: var(--accent-color);">Lab</span></a>
       </div>
-      <!-- Навигация: переведённые пункты -->
       <ul class="nav-links">
         <li><a href="index.html" class="active">Дом</a></li>
         <li class="dropdown">
@@ -56,51 +32,81 @@
           </div>
         </li>
         <li><a href="blog.html">Блог</a></li>
-        <li><a href="about.html">Команда</a></li>
+        <li><a href="ai-assistant.html">AI-ассистент</a></li>
       </ul>
-      <!-- Переключатель темы -->
       <div class="theme-toggle" id="theme-toggle" title="Переключить тему">
         <span class="theme-icon" id="theme-icon"></span>
       </div>
     </nav>
   </header>
-  
-  <!-- Основной контент -->
+
   <main class="container">
-    <!-- Hero-секция с ограничением длины строки -->
     <section class="hero text-limited">
-      <!-- lazy-loading для аватара -->
-      <img 
-        src="https://github.com/STEP3DLab/Printing/blob/main/images/avatar.png?raw=true"
-        alt="Avatar"
-        class="avatar"
-        loading="lazy"
-      />
       <h1>Добро пожаловать в Step3D.Lab!</h1>
-      <p>Здесь вы узнаете всё про аддитивные технологии, реверсивный инжиниринг и промышленный дизайн.</p>
+      <p>
+        Здесь вы узнаете всё про аддитивные технологии, реверсивный инжиниринг и промышленный дизайн.
+      </p>
     </section>
-    
-    <!-- Блок CTA, предлагающий комикс в стиле Гибли -->
-    <section class="cta-block text-limited">
-      <h2>Читайте наш комикс!</h2>
-      <p>Приключения в мире аддитивных технологий и Step3D в стиле Гибли – уникальная история, которая вдохновляет!</p>
-      <a href="ghibli_comic.pdf" class="btn cta-btn" id="cta-btn" download>Посмотреть комикс</a>
+
+    <!-- 3 квадрата (сторис) -->
+    <section class="stories-wrapper text-limited">
+      <h2>Наши сторис</h2>
+      <div class="stories">
+        <div class="story-card" data-story="1">
+          <img src="https://via.placeholder.com/200/FF6600/FFFFFF?text=Story+1" alt="Story 1">
+          <p>История 1</p>
+        </div>
+        <div class="story-card" data-story="2">
+          <img src="https://via.placeholder.com/200/3399FF/FFFFFF?text=Story+2" alt="Story 2">
+          <p>История 2</p>
+        </div>
+        <div class="story-card" data-story="3">
+          <img src="https://via.placeholder.com/200/66CC66/FFFFFF?text=Story+3" alt="Story 3">
+          <p>История 3</p>
+        </div>
+      </div>
     </section>
-    
-    <!-- Раздел для Telegram-канала -->
+
+    <!-- Модальные окна для сторис -->
+    <div class="story-modal" id="storyModal1">
+      <div class="story-modal-content">
+        <span class="close-modal">&times;</span>
+        <h3>История №1</h3>
+        <p>Краткая история о том, как мы открыли первый центр аддитивных технологий.</p>
+      </div>
+    </div>
+    <div class="story-modal" id="storyModal2">
+      <div class="story-modal-content">
+        <span class="close-modal">&times;</span>
+        <h3>История №2</h3>
+        <p>Путешествие в мир промышленного дизайна: от идеи до прототипа.</p>
+      </div>
+    </div>
+    <div class="story-modal" id="storyModal3">
+      <div class="story-modal-content">
+        <span class="close-modal">&times;</span>
+        <h3>История №3</h3>
+        <p>Как мы пришли к созданию Step3D.Lab и решили поделиться знаниями.</p>
+      </div>
+    </div>
+
+    <!-- Раздел Telegram-канала -->
     <section class="projects text-limited">
       <h2>Наш Telegram-канал</h2>
       <div class="project-item">
         <h3>Step3D.Lab в Telegram</h3>
-        <p>Подписывайтесь на наш Telegram-канал, где мы делимся новостями, статьями и идеями. Узнайте всё про <em>htmlcssretro</em> и современные технологии!</p>
+        <p>
+          Подписывайтесь на наш Telegram-канал, где мы делимся новостями, статьями и идеями. 
+          Узнайте всё про <em>htmlcssretro</em> и современные технологии!
+        </p>
         <div class="tags">
           <span>#htmlcssretro</span>
         </div>
         <p>Присоединяйтесь: <a href="https://t.me/STEP_3D_Lab" target="_blank">https://t.me/STEP_3D_Lab</a></p>
       </div>
     </section>
-    
-    <!-- Раздел статей -->
+
+    <!-- Последние статьи -->
     <section class="articles text-limited">
       <h2>Последние статьи</h2>
       <div class="article-preview">
@@ -108,57 +114,52 @@
         <p>Как создать самый простой HTML-файл? Разбираемся с тэгами и структурой.</p>
         <small>Dec 18, 2024 • 4 мин чтения</small>
       </div>
-      <!-- Дополнительные статьи можно добавить здесь -->
+      <!-- Добавляйте дополнительные статьи -->
     </section>
   </main>
-  
-  <!-- Подвал сайта -->
+
   <footer class="site-footer text-limited">
     <p>© 2025 Step3D.Lab. All rights reserved.</p>
     <p class="quote">"The symphony of silence plays best when butterflies wear tiny boots."</p>
   </footer>
-  
-  <!-- Контейнер для Canvas-анимации -->
+
   <div class="canvas-container">
     <canvas id="mouseEffectCanvas"></canvas>
   </div>
-  
-  <!-- Tooltip для CTA (интерактивная обратная связь) -->
-  <div id="cta-tooltip">Загрузка комикса началась!</div>
-  
-  <!-- Скрипты: переключение темы, Canvas-анимация и интерактивный tooltip -->
+
+  <!-- Скрипты: переключение темы, canvas-анимация, сторис-модалки -->
   <script>
-    /* --- Переключение темы с сохранением в localStorage --- */
+    /* ====== Тема ====== */
     const body = document.body;
     const themeToggleBtn = document.getElementById('theme-toggle');
     const themeIcon = document.getElementById('theme-icon');
-    
     const savedTheme = localStorage.getItem('theme');
+
     if (savedTheme) {
       body.classList.toggle('light', savedTheme === 'light');
       themeIcon.textContent = savedTheme === 'light' ? '🌙' : '☀️';
     } else {
       themeIcon.textContent = '☀️';
     }
-    
     themeToggleBtn.addEventListener('click', () => {
       body.classList.toggle('light');
       const isLight = body.classList.contains('light');
       themeIcon.textContent = isLight ? '🌙' : '☀️';
       localStorage.setItem('theme', isLight ? 'light' : 'dark');
     });
-    
-    /* --- Canvas-анимация --- */
+
+    /* ====== Canvas-анимация ====== */
     const canvas = document.getElementById('mouseEffectCanvas');
     const ctx = canvas.getContext('2d');
     let w, h;
+
     function resizeCanvas() {
       w = canvas.width = canvas.offsetWidth;
       h = canvas.height = canvas.offsetHeight;
     }
     window.addEventListener('resize', resizeCanvas);
     resizeCanvas();
-    
+
     const particles = [];
     class Particle {
       constructor(x, y, color='243,86,38') {
@@ -182,7 +183,6 @@
         ctx.fill();
       }
     }
-    
     canvas.addEventListener('mousemove', (e) => {
       if (window.innerWidth < 768) return;
       const rect = canvas.getBoundingClientRect();
@@ -192,7 +192,6 @@
         particles.push(new Particle(x, y));
       }
     });
-    
     canvas.addEventListener('click', (e) => {
       if (window.innerWidth < 768) return;
       const rect = canvas.getBoundingClientRect();
@@ -202,7 +201,6 @@
         particles.push(new Particle(x, y, '0,200,255'));
       }
     });
-    
     function animate() {
       requestAnimationFrame(animate);
       ctx.clearRect(0, 0, w, h);
@@ -216,18 +214,35 @@
       }
     }
     animate();
-    
-    /* --- Tooltip для CTA --- */
-    const ctaBtn = document.getElementById('cta-btn');
-    const ctaTooltip = document.getElementById('cta-tooltip');
-    
-    ctaBtn.addEventListener('click', () => {
-      // Отобразить tooltip
-      ctaTooltip.classList.add('show');
-      // Скрыть его через 3 секунды
-      setTimeout(() => {
-        ctaTooltip.classList.remove('show');
-      }, 3000);
+
+    /* ====== Сторис-модалки ====== */
+    const storyCards = document.querySelectorAll('.story-card');
+    const modals = {
+      1: document.getElementById('storyModal1'),
+      2: document.getElementById('storyModal2'),
+      3: document.getElementById('storyModal3')
+    };
+
+    storyCards.forEach(card => {
+      card.addEventListener('click', () => {
+        const storyId = card.dataset.story;
+        modals[storyId].style.display = 'block';
+      });
+    });
+
+    // Закрываем модалку по клику на крестик
+    const closeButtons = document.querySelectorAll('.close-modal');
+    closeButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        btn.closest('.story-modal').style.display = 'none';
+      });
+    });
+
+    // Закрытие модалки при клике вне контента
+    window.addEventListener('click', (e) => {
+      if (e.target.classList.contains('story-modal')) {
+        e.target.style.display = 'none';
+      }
     });
   </script>
 </body>
