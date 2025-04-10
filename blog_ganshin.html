@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Владимир Константинович Ганьшин — Статья</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link 
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap&subset=cyrillic" 
+    rel="stylesheet"
+  >
+</head>
+<body>
+  <div id="progress-bar"></div>
+  <header class="site-header sticky-header">
+    <nav class="navbar">
+      <div class="logo">
+        <a href="index.html">Step3D.<span style="color: var(--accent-color);">Lab</span></a>
+      </div>
+      <ul class="nav-links">
+        <li><a href="index.html">Дом</a></li>
+        <li class="dropdown">
+          <a href="courses.html" class="dropbtn">Курсы ▾</a>
+          <div class="dropdown-content">
+            <a href="courses.html#R22_02">R22_02 Reverse Eng.</a>
+            <a href="courses.html#html-course">HTML/CSS Basics</a>
+            <a href="courses.html#other-courses">Другие курсы</a>
+          </div>
+        </li>
+        <li><a href="blog.html">Блог</a></li>
+        <li><a href="ai-assistant.html">AI-ассистент</a></li>
+      </ul>
+      <div class="theme-toggle" id="theme-toggle" title="Переключить тему">
+        <span class="theme-icon" id="theme-icon"></span>
+      </div>
+    </nav>
+  </header>
+
+  <main class="container">
+    <nav class="breadcrumbs text-limited">
+      <a href="index.html">Дом</a> → 
+      <a href="blog.html">Блог</a> → 
+      <span>Владимир Константинович Ганьшин</span>
+    </nav>
+    <div class="back-link text-limited">
+      <a href="blog.html" class="btn">&larr; Назад к блогу</a>
+    </div>
+    <article class="blog-article text-limited">
+      <h1>Владимир Константинович Ганьшин</h1>
+      <p class="post-date">Apr 18, 2025 • 7 мин</p>
+      
+      <p>
+        <strong>Руководитель технопарка</strong> (2019 – н.в.), член ученого совета РГСУ по стратегическому планированию и проектной деятельности (2023 – н.в.).
+      </p>
+      <p><em>#шахматы, #AI, #XR, #Step3D</em></p>
+      
+      <p>
+        Здесь разместите всю детальную информацию о Владимире Константиновиче: сведения об образовании, опыте преподавания, компетенциях, достижениях, публикациях и увлечениях.  
+        _(Скопируйте сюда полный текст, предоставленный ранее, либо отформатируйте по вашему усмотрению.)_
+      </p>
+    </article>
+  </main>
+
+  <footer class="site-footer text-limited">
+    <p>© 2025 Step3D.Lab. All rights reserved.</p>
+  </footer>
+
+  <div class="canvas-container">
+    <canvas id="mouseEffectCanvas"></canvas>
+  </div>
+
+  <script>
+    /* Тема */
+    const body = document.body;
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const themeIcon = document.getElementById('theme-icon');
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+      body.classList.toggle('light', savedTheme === 'light');
+      themeIcon.textContent = savedTheme === 'light' ? '🌙' : '☀️';
+    } else {
+      themeIcon.textContent = '☀️';
+    }
+    themeToggleBtn.addEventListener('click', () => {
+      body.classList.toggle('light');
+      const isLight = body.classList.contains('light');
+      themeIcon.textContent = isLight ? '🌙' : '☀️';
+      localStorage.setItem('theme', isLight ? 'light' : 'dark');
+    });
+    
+    /* Canvas */
+    const canvas = document.getElementById('mouseEffectCanvas');
+    const ctx = canvas.getContext('2d');
+    let w, h;
+    function resizeCanvas() {
+      w = canvas.width = canvas.offsetWidth;
+      h = canvas.height = canvas.offsetHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+    const particles = [];
+    class Particle {
+      constructor(x, y, color='243,86,38') {
+        this.x = x;
+        this.y = y;
+        this.radius = Math.random() * 8 + 2;
+        this.alpha = 1;
+        this.speedX = (Math.random() - 0.5) * 2;
+        this.speedY = (Math.random() - 0.5) * 2;
+        this.color = color;
+      }
+      update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+        this.alpha -= 0.01;
+      }
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(${this.color}, ${this.alpha})`;
+        ctx.fill();
+      }
+    }
+    canvas.addEventListener('mousemove', (e) => {
+      if (window.innerWidth < 768) return;
+      const rect = canvas.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      for (let i = 0; i < 3; i++) {
+        particles.push(new Particle(x, y));
+      }
+    });
+    canvas.addEventListener('click', (e) => {
+      if (window.innerWidth < 768) return;
+      const rect = canvas.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      for (let i = 0; i < 5; i++) {
+        particles.push(new Particle(x, y, '0,200,255'));
+      }
+    });
+    function animate() {
+      requestAnimationFrame(animate);
+      ctx.clearRect(0, 0, w, h);
+      for (let i = 0; i < particles.length; i++) {
+        particles[i].update();
+        particles[i].draw();
+        if (particles[i].alpha <= 0) {
+          particles.splice(i, 1);
+          i--;
+        }
+      }
+    }
+    animate();
+  </script>
+</body>
+</html>
