@@ -3,11 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Step3D — Курсы</title>
+  <title>Step3D.Lab — Курсы</title>
 
-  <!-- Стили -->
   <link rel="stylesheet" href="css/style.css" />
-  <!-- Montserrat -->
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link 
     href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap&subset=cyrillic"
@@ -15,26 +13,24 @@
   >
 </head>
 <body>
-  <!-- Sticky header -->
   <header class="site-header sticky-header">
     <nav class="navbar">
       <div class="logo">
-        <a href="index.html">Step<span>3D</span></a>
+        <a href="index.html">Step3D.<span style="color: var(--accent-color);">Lab</span></a>
       </div>
       <ul class="nav-links">
-        <li><a href="index.html">home</a></li>
+        <li><a href="index.html">Дом</a></li>
         <li class="dropdown">
-          <a href="courses.html" class="active dropbtn">courses ▾</a>
+          <a href="courses.html" class="active dropbtn">Курсы ▾</a>
           <div class="dropdown-content">
             <a href="#R22_02">R22_02 Reverse Eng.</a>
             <a href="#html-course">HTML/CSS Basics</a>
             <a href="#other-courses">Другие курсы</a>
           </div>
         </li>
-        <li><a href="blog.html">blog</a></li>
-        <li><a href="about.html">about</a></li>
+        <li><a href="blog.html">Блог</a></li>
+        <li><a href="ai-assistant.html">AI-ассистент</a></li>
       </ul>
-      <!-- Переключатель темы -->
       <div class="theme-toggle" id="theme-toggle" title="Переключить тему">
         <span class="theme-icon" id="theme-icon"></span>
       </div>
@@ -45,77 +41,73 @@
     <section class="courses text-limited">
       <h1>Наши Курсы</h1>
 
-      <!-- Пример курса «HTML/CSS Basics» -->
-      <article id="html-course" class="course-item">
-        <h2>Курс по HTML и CSS</h2>
-        <p>Подробный курс, начиная от самых основ и заканчивая адаптивной вёрсткой. 
-           Идеально для тех, кто хочет быстро стартовать в веб-разработке.</p>
-        <a class="btn" href="#">Подробнее</a>
-      </article>
-
-      <!-- Пример второго курса: JS -->
-      <article class="course-item">
-        <h2>Курс по JavaScript</h2>
-        <p>Быстрый старт в JavaScript: основы ES6, работа с DOM, создание SPA-приложений. 
-           Для тех, кто уже знаком с версткой.</p>
-        <a class="btn" href="#">Подробнее</a>
-      </article>
-
-      <!-- Курс R22_02 -->
-      <article id="R22_02" class="course-item">
-        <h2>«R22» Реверсивный инжиниринг и аддитивное производство</h2>
-        <p>
-          Специализированный курс для тех, кто хочет углубиться в 3D-сканирование, 
-          моделирование и 3D-печать. Предусмотрены модули от 48 до 144 академ. часов.
-        </p>
-        <ul>
-          <li>Использование актуального ПО (Geomagic, T-Flex CAD, Компас 3D и др.)</li>
-          <li>Работа с 3D-сканерами (RangeVision Helix, Spectrum)</li>
-          <li>Сертификат гос. образца и демонстрационный экзамен</li>
-        </ul>
-        <!-- Пример кнопки на подробную PDF-программу -->
-        <a class="btn" href="R22_02_program.pdf" download>Скачать программу (PDF)</a>
-      </article>
-
-      <!-- Секция для «других курсов» -->
-      <div id="other-courses">
-        <h2>Другие курсы</h2>
-
-        <article class="course-item">
-          <h3>Прототипирование на ЧПУ</h3>
-          <p>Быстрое изготовление прототипов на станках с ЧПУ: режимы резания, CAD/CAM-подготовка, 
-             постпроцессоры.</p>
-          <a class="btn" href="#">Подробнее</a>
+      <!-- Карточки курсов -->
+      <div class="courses-grid">
+        <article id="html-course" class="course-item fancy-card">
+          <h2>Курс по HTML и CSS</h2>
+          <p>
+            Подробный курс, начиная от самых основ и заканчивая адаптивной вёрсткой.
+            Идеально для тех, кто хочет быстро стартовать в веб-разработке.
+          </p>
+          <button class="btn">Подробнее</button>
         </article>
 
-        <article class="course-item">
-          <h3>Основы Python</h3>
-          <p>Python для начинающих, от простых скриптов до базового анализа данных. 
-             Идеален для первых шагов в программировании.</p>
-          <a class="btn" href="#">Подробнее</a>
+        <article class="course-item fancy-card">
+          <h2>Курс по JavaScript</h2>
+          <p>
+            Быстрый старт в JavaScript: основы ES6, работа с DOM, создание SPA-приложений.
+            Для тех, кто уже знаком с версткой.
+          </p>
+          <button class="btn">Подробнее</button>
         </article>
 
-        <!-- Добавляйте дополнительные курсы -->
+        <article id="R22_02" class="course-item fancy-card">
+          <h2>«R22» Реверсивный инжиниринг и аддитивное производство</h2>
+          <p>
+            Специализированный курс для углублённого изучения 3D-сканирования, моделирования и 3D-печати.
+          </p>
+          <ul>
+            <li>ПО: Geomagic, T-Flex CAD, Компас 3D и др.</li>
+            <li>3D-сканеры (RangeVision Helix, Spectrum)</li>
+          </ul>
+          <button class="btn">Скачать программу (PDF)</button>
+        </article>
+
+        <!-- Другие курсы -->
+        <article class="course-item fancy-card">
+          <h2>Прототипирование на ЧПУ</h2>
+          <p>
+            Быстрое изготовление прототипов на станках с ЧПУ: изучаем режимы резания,
+            базовый CAD/CAM и постпроцессоры.
+          </p>
+          <button class="btn">Подробнее</button>
+        </article>
+
+        <article class="course-item fancy-card">
+          <h2>Основы Python</h2>
+          <p>
+            Python для начинающих, от простых скриптов до базового анализа данных. 
+            Идеален для первых шагов в программировании.
+          </p>
+          <button class="btn">Подробнее</button>
+        </article>
       </div>
     </section>
   </main>
 
-  <!-- Подвал -->
   <footer class="site-footer text-limited">
-    <p>© 2025 Step3D. All rights reserved.</p>
+    <p>© 2025 Step3D.Lab. All rights reserved.</p>
   </footer>
 
-  <!-- Canvas-анимация -->
   <div class="canvas-container">
     <canvas id="mouseEffectCanvas"></canvas>
   </div>
 
   <script>
-    /* ====== Переключение темы ====== */
+    /* Тема */
     const body = document.body;
     const themeToggleBtn = document.getElementById('theme-toggle');
     const themeIcon = document.getElementById('theme-icon');
-
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme) {
       body.classList.toggle('light', savedTheme === 'light');
@@ -123,7 +115,6 @@
     } else {
       themeIcon.textContent = '☀️';
     }
-
     themeToggleBtn.addEventListener('click', () => {
       body.classList.toggle('light');
       const isLight = body.classList.contains('light');
@@ -131,18 +122,16 @@
       localStorage.setItem('theme', isLight ? 'light' : 'dark');
     });
 
-    /* ====== Canvas-анимация ====== */
+    /* Canvas */
     const canvas = document.getElementById('mouseEffectCanvas');
     const ctx = canvas.getContext('2d');
     let w, h;
-
     function resizeCanvas() {
       w = canvas.width = canvas.offsetWidth;
       h = canvas.height = canvas.offsetHeight;
     }
     window.addEventListener('resize', resizeCanvas);
     resizeCanvas();
-
     const particles = [];
     class Particle {
       constructor(x, y, color='243,86,38') {
@@ -166,7 +155,6 @@
         ctx.fill();
       }
     }
-
     canvas.addEventListener('mousemove', (e) => {
       if (window.innerWidth < 768) return;
       const rect = canvas.getBoundingClientRect();
@@ -176,7 +164,6 @@
         particles.push(new Particle(x, y));
       }
     });
-
     canvas.addEventListener('click', (e) => {
       if (window.innerWidth < 768) return;
       const rect = canvas.getBoundingClientRect();
@@ -186,7 +173,6 @@
         particles.push(new Particle(x, y, '0,200,255'));
       }
     });
-
     function animate() {
       requestAnimationFrame(animate);
       ctx.clearRect(0, 0, w, h);
