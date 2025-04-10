@@ -3,11 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Step3D — Блог</title>
+  <title>Step3D.Lab — Блог</title>
 
-  <!-- Стили -->
   <link rel="stylesheet" href="css/style.css" />
-  <!-- Montserrat -->
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link 
     href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap&subset=cyrillic"
@@ -15,78 +13,63 @@
   >
 </head>
 <body>
-  <!-- Шапка (sticky) -->
   <header class="site-header sticky-header">
     <nav class="navbar">
       <div class="logo">
-        <a href="index.html">Step<span>3D</span></a>
+        <a href="index.html">Step3D.<span style="color: var(--accent-color);">Lab</span></a>
       </div>
       <ul class="nav-links">
-        <li><a href="index.html">home</a></li>
+        <li><a href="index.html">Дом</a></li>
         <li class="dropdown">
-          <a href="courses.html" class="dropbtn">courses ▾</a>
+          <a href="courses.html" class="dropbtn">Курсы ▾</a>
           <div class="dropdown-content">
             <a href="courses.html#R22_02">R22_02 Reverse Eng.</a>
             <a href="courses.html#html-course">HTML/CSS Basics</a>
             <a href="courses.html#other-courses">Другие курсы</a>
           </div>
         </li>
-        <li><a href="blog.html" class="active">blog</a></li>
-        <li><a href="about.html">about</a></li>
+        <li><a href="blog.html" class="active">Блог</a></li>
+        <li><a href="ai-assistant.html">AI-ассистент</a></li>
       </ul>
-      <!-- Тема -->
       <div class="theme-toggle" id="theme-toggle" title="Переключить тему">
         <span class="theme-icon" id="theme-icon"></span>
       </div>
     </nav>
   </header>
 
-  <!-- Основной контент -->
   <main class="container">
     <section class="articles-list text-limited">
       <h1>Статьи</h1>
 
-      <!-- Пример статьи 1 -->
+      <!-- Статья о Владимире Константиновиче Ганьшине -->
+      <article class="article-preview">
+        <h2><a href="blog_ganshin.html">Владимир Константинович Ганьшин</a></h2>
+        <p>Руководитель технопарка (2019 – н.в.), член ученого совета РГСУ по стратегическому планированию...</p>
+        <small>Apr 18, 2025 • 7 мин</small>
+      </article>
+
+      <!-- Пример других статей -->
       <article class="article-preview">
         <h2><a href="article.html">Основы HTML</a></h2>
         <p>Как создать самый простой HTML-файл? Разбираемся с тэгами и структурой.</p>
         <small>Dec 18, 2024 • 4 мин</small>
       </article>
-
-      <!-- Пример статьи 2 -->
-      <article class="article-preview">
-        <h2><a href="article.html">Что такое CSS и как им пользоваться?</a></h2>
-        <p>Быстро разбираем базовую концепцию каскадных таблиц стилей.</p>
-        <small>Jan 05, 2025 • 5 мин</small>
-      </article>
-
-      <!-- Пример статьи 3 -->
-      <article class="article-preview">
-        <h2><a href="article.html">Реверсивный инжиниринг на практике</a></h2>
-        <p>Короткий обзор технологий 3D-сканирования и аддитивного производства.</p>
-        <small>Feb 12, 2025 • 6 мин</small>
-      </article>
-
-      <!-- Добавляйте дополнительные статьи -->
     </section>
   </main>
 
-  <!-- Подвал -->
   <footer class="site-footer text-limited">
-    <p>© 2025 Step3D. All rights reserved.</p>
+    <p>© 2025 Step3D.Lab. All rights reserved.</p>
   </footer>
 
-  <!-- Canvas-анимация -->
   <div class="canvas-container">
     <canvas id="mouseEffectCanvas"></canvas>
   </div>
 
   <script>
-    /* ====== Переключение темы ====== */
+    /* Тема */
     const body = document.body;
     const themeToggleBtn = document.getElementById('theme-toggle');
     const themeIcon = document.getElementById('theme-icon');
-
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme) {
       body.classList.toggle('light', savedTheme === 'light');
@@ -94,7 +77,6 @@
     } else {
       themeIcon.textContent = '☀️';
     }
-
     themeToggleBtn.addEventListener('click', () => {
       body.classList.toggle('light');
       const isLight = body.classList.contains('light');
@@ -102,18 +84,16 @@
       localStorage.setItem('theme', isLight ? 'light' : 'dark');
     });
 
-    /* ====== Canvas-анимация ====== */
+    /* Canvas */
     const canvas = document.getElementById('mouseEffectCanvas');
     const ctx = canvas.getContext('2d');
     let w, h;
-
     function resizeCanvas() {
       w = canvas.width = canvas.offsetWidth;
       h = canvas.height = canvas.offsetHeight;
     }
     window.addEventListener('resize', resizeCanvas);
     resizeCanvas();
-
     const particles = [];
     class Particle {
       constructor(x, y, color='243,86,38') {
@@ -137,8 +117,6 @@
         ctx.fill();
       }
     }
-
-    // Мышь
     canvas.addEventListener('mousemove', (e) => {
       if (window.innerWidth < 768) return;
       const rect = canvas.getBoundingClientRect();
@@ -148,8 +126,6 @@
         particles.push(new Particle(x, y));
       }
     });
-
-    // Клик
     canvas.addEventListener('click', (e) => {
       if (window.innerWidth < 768) return;
       const rect = canvas.getBoundingClientRect();
@@ -159,8 +135,6 @@
         particles.push(new Particle(x, y, '0,200,255'));
       }
     });
-
-    // Анимация
     function animate() {
       requestAnimationFrame(animate);
       ctx.clearRect(0, 0, w, h);
