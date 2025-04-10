@@ -3,526 +3,303 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Step3D.Lab — Главная</title>
-
-  <!-- Здесь подключаем style.css или пишем свой CSS -->
-  <!-- Предполагается, что style.css уже существует, но для удобства мы добавим нужные стили прямо тут -->
+  <title>Step3D.Lab — 3D-Сторис</title>
+  
+  <!-- Шрифт (Montserrat) + стили -->
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link 
     href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap&subset=cyrillic"
     rel="stylesheet"
   >
-
+  
   <style>
-    /* ======== Базовые настройки и переменные ======== */
+    /* ======= Базовые настройки ======= */
     :root {
-      --bg-color: #ffffff;  /* По умолчанию светлая тема */
+      --bg-color: #ffffff;
       --text-color: #000000;
       --accent-color: #e64f26;
-      --secondary-bg: #f2f2f2;
-      --border-color: #cccccc;
-      --font-main: 'Montserrat', sans-serif;
-      --transition-speed: 0.3s;
+      --card-bg: #f3f3f3;
+      --border-color: #ccc;
+      --transition-speed: 0.8s;
+      --cube-size: 150px; /* Размер куба */
     }
 
     body {
+      margin: 0; 
+      padding: 0;
+      font-family: 'Montserrat', sans-serif;
       background-color: var(--bg-color);
       color: var(--text-color);
-      font-family: var(--font-main);
-      font-size: 16px;
-      margin: 0;
-      padding: 0;
-      transition: background-color var(--transition-speed) ease, 
-                  color var(--transition-speed) ease;
     }
-
-    /* ======== Темная тема (если нужно переключение) ======== */
-    body.dark {
-      --bg-color: #000000;     
-      --text-color: #ffffff;     
-      --accent-color: #f35626;   
-      --secondary-bg: #111111;
-      --border-color: #444444;
+    h1, h2, p {
+      margin: 0.5rem 0;
     }
-
-    /* ======== Шапка (header) и навигация ======== */
-    .site-header {
-      position: sticky;
-      top: 0;
-      z-index: 999;
-      background-color: var(--bg-color);
-      border-bottom: 1px solid var(--border-color);
-    }
-    .navbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+    
+    /* ======= Контейнер для 3D-кубов ======= */
+    .stories-container {
       width: 90%;
       max-width: 1200px;
-      margin: 0 auto;
-      padding: 0.5rem 0;
-    }
-    .logo a {
-      font-size: 1.5rem;
-      font-weight: bold;
-      text-transform: uppercase;
-      text-decoration: none;
-      color: var(--text-color);
-    }
-    .logo a span {
-      color: var(--accent-color);
-    }
-    .nav-links {
-      list-style: none;
-      display: flex;
-      gap: 1rem;
-    }
-    .nav-links li a {
-      padding: 0.5rem 0.75rem;
-      border-radius: 4px;
-      text-decoration: none;
-      color: var(--text-color);
-      transition: background-color 0.2s ease, color 0.2s ease;
-    }
-    .nav-links li a:hover {
-      background-color: var(--secondary-bg);
-      color: var(--accent-color);
-    }
-
-    /* ======== Кнопка и иконка Telegram ======== */
-    .telegram-btn {
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-      margin-left: 1rem;
-      color: var(--text-color);
-      text-decoration: none;
-      border: 1px solid var(--border-color);
-      padding: 0.4rem 0.6rem;
-      border-radius: 4px;
-      transition: background-color 0.2s ease, border-color 0.2s ease;
-    }
-    .telegram-btn:hover {
-      background-color: var(--accent-color);
-      color: var(--bg-color);
-      border-color: var(--accent-color);
-    }
-    .telegram-btn img {
-      width: 20px;
-      height: 20px;
-    }
-
-    /* ======== Тема (светлая/темная) переключатель ======== */
-    .theme-toggle {
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 40px;
-      height: 40px;
-      font-size: 1.2rem;
-      border-radius: 4px;
-      margin-left: 1rem;
-    }
-    .theme-icon {
-      display: inline-block;
-      text-align: center;
-    }
-
-    /* ======== Контейнер ======== */
-    .container {
-      width: 90%;
-      max-width: 1000px;
       margin: 2rem auto;
-    }
-
-    /* ======== Hero-секция ======== */
-    .hero {
-      text-align: center;
-      margin-bottom: 2rem;
-    }
-
-    /* ======== Блок сторис: 3 квадрата ======== */
-    .stories-wrapper {
-      margin-bottom: 2rem;
       text-align: center;
     }
-    .stories {
+    .stories-heading {
+      margin-bottom: 1.5rem;
+    }
+    
+    .cubes-wrapper {
       display: flex;
-      gap: 1rem;
       justify-content: center;
-      margin-top: 1.5rem;
-      flex-wrap: wrap; /* Чтобы на мобильных переходили на следующую строку */
+      flex-wrap: wrap; /* Чтобы на мобильном уходило на новую строку */
+      gap: 1rem;
     }
-    .story-card {
-      width: 180px;
-      text-align: center;
+    
+    /* ======= Каждый куб ======= */
+    .cube {
+      width: var(--cube-size);
+      height: var(--cube-size);
+      position: relative;
+      transform-style: preserve-3d; /* Включаем 3D-сообщения */
+      transition: transform var(--transition-speed) ease;
       cursor: pointer;
-      border: 1px solid var(--border-color);
-      border-radius: 8px;
-      padding: 0.5rem;
-      transition: transform 0.3s ease;
-      background-color: var(--secondary-bg);
+      margin-bottom: 1rem;
+      perspective: 1000px; /* Доп. для плавности */
     }
-    .story-card:hover {
-      transform: scale(1.05);
+    /* При наведении слегка поворачиваем */
+    .cube:hover {
+      transform: rotateY(15deg) rotateX(10deg);
     }
-    .story-card img {
+
+    .cube-inner {
       width: 100%;
+      height: 100%;
+      position: absolute;
+      transform-style: preserve-3d;
+      transition: transform var(--transition-speed) ease;
+    }
+    
+    /* Каждая «грань» куба */
+    .cube-face {
+      position: absolute;
+      width: var(--cube-size);
+      height: var(--cube-size);
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
       border-radius: 6px;
     }
-
-    /* Модальные окна для историй */
-    .story-modal {
-      display: none;
+    
+    /* Расположение граней (простейший вариант) */
+    .face-front  { transform: translateZ(calc(var(--cube-size) / 2)); }
+    .face-back   { transform: rotateY(180deg) translateZ(calc(var(--cube-size) / 2)); }
+    .face-right  { transform: rotateY(90deg)  translateZ(calc(var(--cube-size) / 2)); }
+    .face-left   { transform: rotateY(-90deg) translateZ(calc(var(--cube-size) / 2)); }
+    .face-top    { transform: rotateX(90deg)  translateZ(calc(var(--cube-size) / 2)); }
+    .face-bottom { transform: rotateX(-90deg) translateZ(calc(var(--cube-size) / 2)); }
+    
+    /* ======= Модальное окно ======= */
+    .modal-overlay {
+      display: none; 
       position: fixed;
-      z-index: 1500;
+      top: 0; 
       left: 0;
-      top: 0;
       width: 100%;
       height: 100%;
-      overflow: auto;
-      background-color: rgba(0,0,0,0.7);
-      backdrop-filter: blur(3px);
-      animation: fadeIn 0.3s forwards;
+      background: rgba(0,0,0,0.8);
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
     }
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
+    .modal-overlay.active {
+      display: flex;
     }
-    .story-modal-content {
-      background-color: var(--bg-color);
-      margin: 10% auto;
-      padding: 1.5rem;
-      border: 1px solid var(--border-color);
-      width: 90%;
-      max-width: 500px;
+    .modal-content {
+      background: #fff;
+      width: 80%;
+      max-width: 600px;
       border-radius: 8px;
+      padding: 1rem;
       position: relative;
-      animation: slideDown 0.3s forwards;
     }
-    @keyframes slideDown {
-      from { transform: translateY(-20px); }
-      to { transform: translateY(0); }
-    }
-    .close-modal {
+    .close-btn {
       position: absolute;
-      top: 0.5rem;
-      right: 0.5rem;
-      font-size: 1.5rem;
+      top: 1rem;
+      right: 1rem;
+      background: transparent;
+      border: none;
+      font-size: 1.4rem;
       cursor: pointer;
       color: var(--accent-color);
     }
-
-    /* ======== Секция проектов, статей... ======== */
-    .projects, .articles {
-      margin-bottom: 2rem;
-    }
-    .projects h2, .articles h2 {
-      margin-bottom: 1rem;
-      font-size: 1.5rem;
-      text-transform: uppercase;
-      border-bottom: 1px solid var(--border-color);
-      padding-bottom: 0.5rem;
-    }
-    .project-item, .article-preview {
-      background-color: var(--secondary-bg);
-      border: 1px solid var(--border-color);
-      border-radius: 4px;
-      padding: 1rem;
-      margin-bottom: 1rem;
-    }
-
-    /* ======== Подвал ======== */
-    .site-footer {
-      background-color: var(--secondary-bg);
-      border-top: 1px solid var(--border-color);
-      padding: 1rem 0;
-      text-align: center;
-      margin-top: 2rem;
-    }
-    .footer-links {
+    .modal-buttons {
       display: flex;
-      justify-content: center;
-      gap: 1rem;
-      margin-bottom: 0.5rem;
-      flex-wrap: wrap;
+      justify-content: space-between;
+      margin-top: 1rem;
     }
-    .footer-links a {
-      color: var(--text-color);
-      text-decoration: none;
-      padding: 0.2rem 0.5rem;
+    .modal-buttons button {
+      background: var(--accent-color);
+      color: #fff;
+      border: none;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
       border-radius: 4px;
-      transition: background-color 0.2s ease;
-    }
-    .footer-links a:hover {
-      background-color: var(--border-color);
-      color: var(--accent-color);
-    }
-    .genius-quote {
-      font-style: italic;
-      color: #777;
+      font-size: 1rem;
     }
 
-    /* ======== Canvas-анимация (общая) ======== */
-    .canvas-container {
-      position: relative;
-      width: 100%;
-      height: 300px;
-      overflow: hidden;
-    }
-    #mouseEffectCanvas {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%;
-      height: 100%;
-    }
-
-    /* ======== Адаптивность сторис ======== */
+    /* ======= Адаптивность ======= */
     @media (max-width: 480px) {
-      .story-card {
-        width: 150px;
+      :root {
+        --cube-size: 120px; 
+      }
+      .cube {
+        margin-bottom: 0.5rem;
       }
     }
   </style>
 </head>
 <body>
-  <!-- По умолчанию (при первой загрузке) делаем светлую тему: 
-       Ниже в скрипте мы проверяем, если нет сохранённой темы — оставляем светлую.
-  -->
-  <header class="site-header">
-    <nav class="navbar">
-      <!-- Логотип (Дом) -->
-      <div class="logo">
-        <a href="index.html">Step3D.<span style="color: var(--accent-color);">Lab</span></a>
-      </div>
-      <ul class="nav-links">
-        <!-- Вместо "Курсы" теперь "Проекты" -->
-        <li><a href="projects.html">Проекты</a></li>
-        <li><a href="blog.html">Блог</a></li>
-        <li><a href="ai-assistant.html">AI</a></li>
-      </ul>
-
-      <!-- Кнопка и иконка для Telegram -->
-      <a href="https://t.me/STEP_3D_Lab" class="telegram-btn" target="_blank">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="TG">
-        Telegram
-      </a>
-
-      <!-- Переключатель темы -->
-      <div class="theme-toggle" id="theme-toggle" title="Переключить тему">
-        <span class="theme-icon" id="theme-icon"></span>
-      </div>
-    </nav>
-  </header>
-
-  <main class="container">
-    <!-- Hero-секция -->
-    <section class="hero">
-      <h1>Добро пожаловать в Step3D.Lab!</h1>
-      <p>Исследуйте мир аддитивных технологий, реверсивного инжиниринга и промышленного дизайна.</p>
-    </section>
-
-    <!-- Сторис -->
-    <section class="stories-wrapper">
-      <h2>Истории успеха</h2>
-      <div class="stories">
-        <div class="story-card" data-story="1">
-          <img src="https://via.placeholder.com/180/FFB6C1/FFFFFF?text=Story+1" alt="Story 1">
-          <p>Первый проект</p>
+  
+  <h1 style="text-align:center; margin:1rem 0;">Step3D.Lab — 3D-Сторис (кубы)</h1>
+  
+  <section class="stories-container">
+    <h2 class="stories-heading">Истории успеха в 3D-кубах</h2>
+    
+    <div class="cubes-wrapper">
+      <!-- Куб №1 -->
+      <div class="cube" data-story="1">
+        <div class="cube-inner">
+          <div class="cube-face face-front">Story 1</div>
+          <div class="cube-face face-back">Backend</div>
+          <div class="cube-face face-right">Right</div>
+          <div class="cube-face face-left">Left</div>
+          <div class="cube-face face-top">Top</div>
+          <div class="cube-face face-bottom">Bottom</div>
         </div>
-        <div class="story-card" data-story="2">
-          <img src="https://via.placeholder.com/180/7FFFD4/000000?text=Story+2" alt="Story 2">
-          <p>Вдохновляющий кейс</p>
+        <p>Первый проект</p>
+      </div>
+      
+      <!-- Куб №2 -->
+      <div class="cube" data-story="2">
+        <div class="cube-inner">
+          <div class="cube-face face-front">Story 2</div>
+          <div class="cube-face face-back">Backend</div>
+          <div class="cube-face face-right">Right</div>
+          <div class="cube-face face-left">Left</div>
+          <div class="cube-face face-top">Top</div>
+          <div class="cube-face face-bottom">Bottom</div>
         </div>
-        <div class="story-card" data-story="3">
-          <img src="https://via.placeholder.com/180/FFD700/000000?text=Story+3" alt="Story 3">
-          <p>Новые горизонты</p>
+        <p>Вдохновляющий кейс</p>
+      </div>
+      
+      <!-- Куб №3 -->
+      <div class="cube" data-story="3">
+        <div class="cube-inner">
+          <div class="cube-face face-front">Story 3</div>
+          <div class="cube-face face-back">Backend</div>
+          <div class="cube-face face-right">Right</div>
+          <div class="cube-face face-left">Left</div>
+          <div class="cube-face face-top">Top</div>
+          <div class="cube-face face-bottom">Bottom</div>
         </div>
-      </div>
-    </section>
-
-    <!-- Модальные окна для сторис -->
-    <div class="story-modal" id="storyModal1">
-      <div class="story-modal-content">
-        <span class="close-modal">&times;</span>
-        <h3>Первый проект</h3>
-        <p>История о том, как команда Step3D.Lab завершила свою первую крупную задачу с использованием 3D-печати.</p>
+        <p>Новые горизонты</p>
       </div>
     </div>
-    <div class="story-modal" id="storyModal2">
-      <div class="story-modal-content">
-        <span class="close-modal">&times;</span>
-        <h3>Вдохновляющий кейс</h3>
-        <p>Как применение реверсивного инжиниринга помогло модернизировать существующее оборудование.</p>
+  </section>
+  
+  <!-- Модальное окно (одно для всех сторис) -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal-content">
+      <button class="close-btn" id="closeModalBtn">&times;</button>
+      
+      <!-- Здесь будет контент истории -->
+      <h2 id="modalStoryTitle">Заголовок истории</h2>
+      <p id="modalStoryText">Основной текст истории...</p>
+      
+      <!-- Кнопки «предыдущая»/«следующая» -->
+      <div class="modal-buttons">
+        <button id="prevStory">← Предыдущая</button>
+        <button id="nextStory">Следующая →</button>
       </div>
     </div>
-    <div class="story-modal" id="storyModal3">
-      <div class="story-modal-content">
-        <span class="close-modal">&times;</span>
-        <h3>Новые горизонты</h3>
-        <p>Расширение лаборатории и запуск учебных программ для будущих инженеров.</p>
-      </div>
-    </div>
-
-    <!-- Раздел Telegram-канала (при желании можно оставить) -->
-    <section class="projects">
-      <h2>Наш Telegram-канал</h2>
-      <div class="project-item">
-        <h3>Step3D.Lab в Telegram</h3>
-        <p>Подписывайтесь на наш канал, где мы делимся новостями, статьями и идеями. #htmlcssretro</p>
-        <p>Присоединяйтесь: <a href="https://t.me/STEP_3D_Lab" target="_blank">https://t.me/STEP_3D_Lab</a></p>
-      </div>
-    </section>
-
-    <!-- Раздел статей (пример) -->
-    <section class="articles">
-      <h2>Последние статьи</h2>
-      <div class="article-preview">
-        <h3><a href="article.html">Основы HTML</a></h3>
-        <p>Как создать самый простой HTML-файл? Разбираемся с тэгами и структурой.</p>
-        <small>Dec 18, 2024 • 4 мин чтения</small>
-      </div>
-    </section>
-  </main>
-
-  <!-- Подвал со всеми разделами -->
-  <footer class="site-footer">
-    <div class="footer-links">
-      <a href="index.html">Дом</a>
-      <a href="projects.html">Проекты</a>
-      <a href="blog.html">Блог</a>
-      <a href="ai-assistant.html">AI</a>
-      <a href="https://t.me/STEP_3D_Lab" target="_blank">Telegram</a>
-    </div>
-    <p class="genius-quote">"Гениальная фраза: В бездне креатива рождаются лучшие 3D-миры."</p>
-  </footer>
-
-  <!-- Canvas-анимация -->
-  <div class="canvas-container">
-    <canvas id="mouseEffectCanvas"></canvas>
   </div>
-
+  
   <script>
-    // ========== Тема (по умолчанию светлая) ==========
-    const body = document.body;
-    const themeToggleBtn = document.getElementById('theme-toggle');
-    const themeIcon = document.getElementById('theme-icon');
+    // Пример данных для «историй», 
+    // при реальном использовании можно хранить в БД/JSON
+    const storiesData = [
+      {
+        id: 1,
+        title: "Первый проект",
+        text: "Подробная история о том, как мы заверишили наш первый 3D-проект и добились успеха."
+      },
+      {
+        id: 2,
+        title: "Вдохновляющий кейс",
+        text: "Как реверсивный инжиниринг помог модернизировать существующие механизмы. Потрясающие результаты!"
+      },
+      {
+        id: 3,
+        title: "Новые горизонты",
+        text: "Расширяем границы лаборатории, проводим образовательные программы и готовим новые проекты."
+      }
+    ];
 
-    // Проверяем локальное хранилище
-    const savedTheme = localStorage.getItem('theme');
-    // Если сохранённая тема 'dark', применяем тёмную
-    if (savedTheme === 'dark') {
-      body.classList.add('dark');
-      themeIcon.textContent = '☀️';
-    } else {
-      // Иначе остаёмся в светлой
-      body.classList.remove('dark');
-      themeIcon.textContent = '🌙';
+    let currentStoryIndex = 0;
+    
+    // Ссылки на элементы
+    const cubes = document.querySelectorAll(".cube");
+    const modalOverlay = document.getElementById("modalOverlay");
+    const closeModalBtn = document.getElementById("closeModalBtn");
+    const modalStoryTitle = document.getElementById("modalStoryTitle");
+    const modalStoryText = document.getElementById("modalStoryText");
+    
+    const prevStoryBtn = document.getElementById("prevStory");
+    const nextStoryBtn = document.getElementById("nextStory");
+
+    // Открытие модалки с историей
+    function openStory(index) {
+      currentStoryIndex = index;
+      const storyObj = storiesData[index];
+      modalStoryTitle.textContent = storyObj.title;
+      modalStoryText.textContent = storyObj.text;
+      modalOverlay.classList.add("active");
     }
 
-    themeToggleBtn.addEventListener('click', () => {
-      body.classList.toggle('dark');
-      const isDark = body.classList.contains('dark');
-      themeIcon.textContent = isDark ? '☀️' : '🌙';
-      localStorage.setItem('theme', isDark ? 'dark' : 'light');
-    });
-
-    // ========== Canvas-анимация ==========
-    const canvas = document.getElementById('mouseEffectCanvas');
-    const ctx = canvas.getContext('2d');
-    let w, h;
-    function resizeCanvas() {
-      w = canvas.width = canvas.offsetWidth;
-      h = canvas.height = canvas.offsetHeight;
-    }
-    window.addEventListener('resize', resizeCanvas);
-    resizeCanvas();
-
-    const particles = [];
-    class Particle {
-      constructor(x, y, color='243,86,38') {
-        this.x = x;
-        this.y = y;
-        this.radius = Math.random() * 8 + 2;
-        this.alpha = 1;
-        this.speedX = (Math.random() - 0.5) * 2;
-        this.speedY = (Math.random() - 0.5) * 2;
-        this.color = color;
-      }
-      update() {
-        this.x += this.speedX;
-        this.y += this.speedY;
-        this.alpha -= 0.01;
-      }
-      draw() {
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(${this.color}, ${this.alpha})`;
-        ctx.fill();
-      }
+    // Закрытие модалки
+    function closeModal() {
+      modalOverlay.classList.remove("active");
     }
 
-    canvas.addEventListener('mousemove', (e) => {
-      if (window.innerWidth < 768) return;
-      const rect = canvas.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      for (let i = 0; i < 3; i++) {
-        particles.push(new Particle(x, y));
-      }
-    });
-
-    canvas.addEventListener('click', (e) => {
-      if (window.innerWidth < 768) return;
-      const rect = canvas.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      for (let i = 0; i < 5; i++) {
-        particles.push(new Particle(x, y, '0,200,255'));
-      }
-    });
-
-    function animate() {
-      requestAnimationFrame(animate);
-      ctx.clearRect(0, 0, w, h);
-      for (let i = 0; i < particles.length; i++) {
-        particles[i].update();
-        particles[i].draw();
-        if (particles[i].alpha <= 0) {
-          particles.splice(i, 1);
-          i--;
-        }
-      }
-    }
-    animate();
-
-    // ========== Модальные окна для сторис ==========
-    const storyCards = document.querySelectorAll('.story-card');
-    const modal1 = document.getElementById('storyModal1');
-    const modal2 = document.getElementById('storyModal2');
-    const modal3 = document.getElementById('storyModal3');
-
-    storyCards.forEach(card => {
-      card.addEventListener('click', () => {
-        const storyId = card.dataset.story;
-        if (storyId === '1') modal1.style.display = 'block';
-        if (storyId === '2') modal2.style.display = 'block';
-        if (storyId === '3') modal3.style.display = 'block';
+    // Обработчики клика по кубам
+    cubes.forEach((cube) => {
+      cube.addEventListener("click", () => {
+        const storyId = parseInt(cube.getAttribute("data-story"), 10);
+        // Находим индекс storyId в массиве storiesData
+        // (id может быть 1,2,3... но индекс 0,1,2)
+        const index = storiesData.findIndex((item) => item.id === storyId);
+        openStory(index);
       });
     });
 
-    // Закрыть по клику на крестик
-    document.querySelectorAll('.close-modal').forEach(btn => {
-      btn.addEventListener('click', () => {
-        btn.closest('.story-modal').style.display = 'none';
-      });
+    // Кнопка «закрыть»
+    closeModalBtn.addEventListener("click", closeModal);
+
+    // Клик вне модального контента (по оверлею) => закрываем
+    modalOverlay.addEventListener("click", (e) => {
+      if (e.target === modalOverlay) closeModal();
     });
-    // Закрыть по клику вне области контента
-    window.addEventListener('click', (e) => {
-      if (e.target.classList.contains('story-modal')) {
-        e.target.style.display = 'none';
-      }
+
+    // Кнопки «предыдущая»/«следующая»
+    prevStoryBtn.addEventListener("click", () => {
+      currentStoryIndex = (currentStoryIndex - 1 + storiesData.length) % storiesData.length;
+      openStory(currentStoryIndex);
+    });
+    nextStoryBtn.addEventListener("click", () => {
+      currentStoryIndex = (currentStoryIndex + 1) % storiesData.length;
+      openStory(currentStoryIndex);
     });
   </script>
 </body>
