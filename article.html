@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Retro Blog — Основы HTML</title>
   <link rel="stylesheet" href="css/style.css" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;700&display=swap&subset=cyrillic" 
+        rel="stylesheet">
 </head>
 <body>
   <header class="site-header">
@@ -17,6 +20,7 @@
         <li><a href="courses.html">courses</a></li>
         <li><a href="blog.html" class="active">blog</a></li>
       </ul>
+      <button id="theme-toggle" class="theme-toggle">Смена темы</button>
     </nav>
   </header>
 
@@ -26,14 +30,13 @@
       <p class="post-date">Dec 18, 2024 • 4 мин</p>
 
       <p>
-        HTML (HyperText Markup Language) — основа всех веб-страниц. Даже при 
-        использовании современных фреймворков важно понимать базовые принципы.
+        HTML (HyperText Markup Language) — основа всех веб-страниц...
       </p>
 
       <h2>Структура HTML</h2>
       <pre><code>
       &lt;!DOCTYPE html&gt;
-      &lt;html lang="en"&gt;
+      &lt;html lang="ru"&gt;
         &lt;head&gt;
           &lt;meta charset="UTF-8"&gt;
           &lt;title&gt;Мой первый сайт&lt;/title&gt;
@@ -43,7 +46,6 @@
         &lt;/body&gt;
       &lt;/html&gt;
       </code></pre>
-
       <p>... и так далее ...</p>
     </article>
   </main>
@@ -51,5 +53,74 @@
   <footer class="site-footer">
     <p>© 2025 Retro Blog. All rights reserved.</p>
   </footer>
+
+  <!-- Аналогично, если нужно, добавляем анимацию -->
+  <div class="canvas-container">
+    <canvas id="mouseEffectCanvas"></canvas>
+  </div>
+  <script>
+    /* Переключение темы */
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    themeToggleBtn.addEventListener('click', () => {
+      document.body.classList.toggle('light');
+    });
+
+    /* Анимация canvas */
+    const canvas = document.getElementById('mouseEffectCanvas');
+    const ctx = canvas.getContext('2d');
+    let w, h;
+    function resizeCanvas() {
+      w = canvas.width = canvas.offsetWidth;
+      h = canvas.height = canvas.offsetHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    const particles = [];
+    class Particle {
+      constructor(x, y) {
+        this.x = x;
+        this.y = y;
+        this.radius = Math.random() * 8 + 2;
+        this.alpha = 1;
+        this.speedX = (Math.random() - 0.5) * 2;
+        this.speedY = (Math.random() - 0.5) * 2;
+      }
+      update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+        this.alpha -= 0.01;
+      }
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(243, 86, 38, ${this.alpha})`;
+        ctx.fill();
+      }
+    }
+
+    canvas.addEventListener('mousemove', (e) => {
+      const rect = canvas.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      for (let i = 0; i < 3; i++) {
+        particles.push(new Particle(x, y));
+      }
+    });
+
+    function animate() {
+      requestAnimationFrame(animate);
+      ctx.clearRect(0, 0, w, h);
+      for (let i = 0; i < particles.length; i++) {
+        particles[i].update();
+        particles[i].draw();
+        if (particles[i].alpha <= 0) {
+          particles.splice(i, 1);
+          i--;
+        }
+      }
+    }
+    animate();
+  </script>
 </body>
 </html>
