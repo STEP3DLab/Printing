@@ -5,19 +5,19 @@
   --accent-color: #f35626;   /* Оранжево-красный акцент */
   --secondary-bg: #111111;
   --border-color: #444444;
-  --font-main: 'PT Sans', sans-serif;
+  --font-main: 'Montserrat', sans-serif;  /* <--- Montserrat */
 }
 
 /* ----- Светлая тема (активируется через body.light) ----- */
 body.light {
   --bg-color: #ffffff;       /* Светлый фон */
   --text-color: #000000;     /* Тёмный текст */
-  --accent-color: #e64f26;   /* Можно чуть изменить оттенок */
+  --accent-color: #e64f26;   
   --secondary-bg: #f2f2f2;
   --border-color: #cccccc;
 }
 
-/* ----- Сброс и базовые стили ----- */
+/* Сброс и базовые стили */
 * {
   margin: 0;
   padding: 0;
@@ -124,7 +124,7 @@ a:hover {
   color: #ccc;
 }
 
-/* ----- Проекты, статьи и т. д. ----- */
+/* ----- Проекты/статьи ----- */
 .projects, .articles {
   margin-bottom: 2rem;
 }
@@ -161,7 +161,7 @@ a:hover {
   color: #aaa;
 }
 
-/* ----- Курсы ----- */
+/* ----- Курсы (если есть) ----- */
 .courses h1 {
   font-size: 2rem;
   margin-bottom: 1rem;
@@ -212,7 +212,7 @@ pre {
 }
 code {
   color: #f0f0f0;
-  font-family: 'Courier New', monospace;
+  font-family: 'Courier New', monospace; /* или Montserrat Mono, если нужно */
 }
 
 /* ----- Canvas-анимация внизу ----- */
