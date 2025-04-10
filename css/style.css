@@ -1,23 +1,22 @@
 /**********************************************************
   style.css — оптимизированная таблица стилей для всего сайта
-  Шаг 1 из 7
+  Итоговый вариант с улучшениями по всем разделам
 ***********************************************************/
 
 /* =========================
-   Тёмная/светлая тема
-   (по умолчанию тёмная)
+   Тёмная/светлая тема (по умолчанию тёмная)
 ========================= */
 :root {
-  --bg-color: #000000;        /* Фон (тёмный) */
-  --text-color: #ffffff;      /* Текст (белый) */
-  --accent-color: #f35626;    /* Оранжевый акцент */
-  --secondary-bg: #111111;    /* Доп. фон */
-  --border-color: #444444;    /* Цвет границ */
-  --font-main: 'Montserrat', sans-serif;  
-  --transition-speed: 0.3s;   /* Плавность переключений */
+  --bg-color: #000000;
+  --text-color: #ffffff;
+  --accent-color: #f35626; 
+  --secondary-bg: #111111;
+  --border-color: #444444;
+  --font-main: 'Montserrat', sans-serif;
+  --transition-speed: 0.3s;
 }
 
-/* Светлая тема, активна когда у body есть класс .light */
+/* Светлая тема */
 body.light {
   --bg-color: #ffffff;
   --text-color: #000000;
@@ -26,36 +25,33 @@ body.light {
   --border-color: #cccccc;
 }
 
-/* Плавный переход при смене темы */
+/* Общие переходы и сброс */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  transition: 
-    background-color var(--transition-speed) ease, 
-    color var(--transition-speed) ease, 
-    border-color var(--transition-speed) ease;
+  transition: background-color var(--transition-speed) ease, 
+              color var(--transition-speed) ease,
+              border-color var(--transition-speed) ease;
 }
-
-/* Базовые настройки */
 html, body {
   background-color: var(--bg-color);
   color: var(--text-color);
   font-family: var(--font-main);
   font-size: 16px;
-  line-height: 1.7;         /* Читабельность текстов */
+  line-height: 1.7;
   min-height: 100%;
 }
 
-/* Ограничиваем длину строки для удобочитаемости */
+/* Ограничение длины строки */
 .text-limited {
-  max-width: 60ch;          /* ~60-70 символов/строка */
+  max-width: 60ch;
   margin-left: auto;
   margin-right: auto;
   padding: 1rem;
 }
 
-/* Ссылки + hover-эффект */
+/* Ссылки */
 a {
   color: var(--text-color);
   text-decoration: none;
@@ -65,7 +61,7 @@ a:hover {
   text-decoration: underline;
 }
 
-/* ----- Шапка (sticky) ----- */
+/* Шапка и навигация */
 .sticky-header {
   position: sticky;
   top: 0;
@@ -83,8 +79,6 @@ a:hover {
   max-width: 1200px;
   margin: 0 auto;
 }
-
-/* Логотип */
 .logo a {
   font-size: 1.5rem;
   font-weight: bold;
@@ -93,8 +87,6 @@ a:hover {
 .logo a span {
   color: var(--accent-color);
 }
-
-/* Навигация */
 .nav-links {
   list-style: none;
   display: flex;
@@ -110,7 +102,7 @@ a:hover {
   color: var(--accent-color);
 }
 
-/* ----- Выпадающее меню (dropdown) ----- */
+/* Dropdown */
 .dropdown {
   position: relative;
 }
@@ -136,7 +128,7 @@ a:hover {
   display: block;
 }
 
-/* Кнопка переключения темы (иконки) */
+/* Кнопка переключения темы */
 .theme-toggle {
   cursor: pointer;
   display: flex;
@@ -148,7 +140,6 @@ a:hover {
   border-radius: 4px;
 }
 .theme-icon {
-  display: inline-block;
   width: 24px;
   text-align: center;
 }
@@ -173,7 +164,59 @@ a:hover {
   margin-bottom: 1rem;
 }
 
-/* CTA-блок (призыв к действию) */
+/* Stories (домашняя страница) */
+.stories-wrapper {
+  margin-bottom: 2rem;
+}
+.stories {
+  display: flex;
+  gap: 1rem;
+  justify-content: space-around;
+}
+.story-card {
+  width: 200px;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+.story-card:hover {
+  transform: scale(1.05);
+}
+.story-card img {
+  width: 100%;
+  border-radius: 8px;
+}
+.story-modal {
+  display: none;
+  position: fixed;
+  z-index: 1500;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.8);
+}
+.story-modal-content {
+  background-color: var(--bg-color);
+  margin: 10% auto;
+  padding: 2rem;
+  border: 1px solid var(--border-color);
+  width: 80%;
+  max-width: 500px;
+  border-radius: 8px;
+  position: relative;
+}
+.close-modal {
+  position: absolute;
+  top: 0.5rem;
+  right: 1rem;
+  font-size: 2rem;
+  cursor: pointer;
+  color: var(--accent-color);
+}
+
+/* CTA-блок */
 .cta-block {
   background-color: var(--secondary-bg);
   text-align: center;
@@ -189,7 +232,7 @@ a:hover {
   font-weight: bold;
 }
 
-/* Основные разделы (проекты, статьи, курсы) */
+/* Projects, статьи, курсы */
 .projects, .articles, .courses {
   margin-bottom: 2rem;
 }
@@ -211,7 +254,7 @@ a:hover {
   color: var(--accent-color);
 }
 
-/* Кнопка (микроанимация при hover) */
+/* Кнопки */
 .btn {
   display: inline-block;
   background-color: var(--accent-color);
@@ -228,6 +271,46 @@ a:hover {
   opacity: 0.9;
 }
 
+/* Chat (для AI-ассистента) */
+.chat-container {
+  max-width: 700px;
+  margin: 2rem auto;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 1rem;
+  background: var(--secondary-bg);
+}
+.chat-messages {
+  height: 400px;
+  overflow-y: auto;
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+}
+.chat-message {
+  margin-bottom: 0.5rem;
+}
+.chat-message.user {
+  text-align: right;
+  color: var(--accent-color);
+}
+.chat-input {
+  display: flex;
+  gap: 0.5rem;
+}
+.chat-input input {
+  flex: 1;
+  padding: 0.5rem;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  color: var(--text-color);
+  background: var(--bg-color);
+}
+.chat-input button {
+  padding: 0.5rem 1rem;
+}
+
 /* Подвал */
 .site-footer {
   border-top: 1px solid var(--border-color);
@@ -240,7 +323,7 @@ a:hover {
   color: #aaa;
 }
 
-/* Страница со статьёй */
+/* Статья блога */
 .blog-article h1 {
   font-size: 2rem;
   margin-bottom: 0.5rem;
@@ -262,7 +345,7 @@ code {
   font-family: "Courier New", monospace;
 }
 
-/* Прогресс-бар (article.html) */
+/* Прогресс-бар для статьи */
 #progress-bar {
   position: fixed;
   top: 0;
@@ -274,7 +357,7 @@ code {
   transition: width 0.1s ease-out;
 }
 
-/* Хлебные крошки (breadcrumbs) */
+/* Хлебные крошки */
 .breadcrumbs {
   font-size: 0.9rem;
   margin-bottom: 1rem;
@@ -284,40 +367,29 @@ code {
   text-decoration: underline;
 }
 
-/* Кнопка «Назад» */
+/* Кнопка "Назад" */
 .back-link {
   margin-bottom: 1rem;
 }
 
-/* Аккордеон (например, about.html) */
-.accordion {
-  margin-bottom: 2rem;
+/* Сетка курсов */
+.courses-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
 }
-.accordion-btn {
-  background: var(--secondary-bg);
-  color: var(--text-color);
-  width: 100%;
-  text-align: left;
+@media (min-width: 768px) {
+  .courses-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+.fancy-card {
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  border-radius: 6px;
   padding: 1rem;
-  border: none;
-  outline: none;
-  cursor: pointer;
-  border-bottom: 1px solid var(--border-color);
-  font-weight: bold;
-  transition: background-color 0.2s ease;
-}
-.accordion-btn:hover {
-  background-color: var(--border-color);
-}
-.accordion-panel {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.2s ease-out;
-  padding: 0 1rem;
-  border-bottom: 1px solid var(--border-color);
 }
 
-/* Canvas-анимация внизу */
+/* Canvas */
 .canvas-container {
   position: relative;
   width: 100%;
@@ -332,20 +404,22 @@ code {
   height: 100%;
 }
 
-/* Пример сетки курсов */
-.courses-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 1rem;
+/* Tooltip CTA (если требуется) */
+#cta-tooltip {
+  position: fixed;
+  bottom: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--accent-color);
+  color: var(--bg-color);
+  padding: 0.75rem 1rem;
+  border-radius: 4px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+  z-index: 1500;
+  font-size: 0.9rem;
 }
-@media (min-width: 768px) {
-  .courses-grid {
-    grid-template-columns: 1fr 1fr; /* 2 колонки на более широких экранах */
-  }
+#cta-tooltip.show {
+  opacity: 1;
 }
-.fancy-card {
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-  border-radius: 6px;
-  padding: 1rem;
-}
-
