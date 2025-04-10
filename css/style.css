@@ -331,3 +331,21 @@ code {
   width: 100%;
   height: 100%;
 }
+
+/* Пример сетки курсов */
+.courses-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+@media (min-width: 768px) {
+  .courses-grid {
+    grid-template-columns: 1fr 1fr; /* 2 колонки на более широких экранах */
+  }
+}
+.fancy-card {
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  border-radius: 6px;
+  padding: 1rem;
+}
+
