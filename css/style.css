@@ -1,0 +1,224 @@
+/* -------- Общие базовые настройки -------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  background-color: #000;      /* Черный фон */
+  color: #fff;                 /* Белый текст */
+  font-family: "Courier New", monospace; 
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+a {
+  color: #fff;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+/* -------- Шапка и меню -------- */
+.site-header {
+  background-color: #000;
+  border-bottom: 1px solid #444;
+  padding: 1rem 0;
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.logo a {
+  font-size: 1.5rem;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+.logo a span {
+  color: #f35626; /* Можно выбрать любой акцентный цвет */
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 1rem;
+}
+
+.nav-links li a {
+  text-transform: lowercase; /* Вид в стиле "retro" */
+  transition: color 0.2s ease;
+  padding: 0.25rem 0.5rem;
+}
+
+.nav-links li a.active, 
+.nav-links li a:hover {
+  color: #f35626;
+}
+
+/* -------- Контейнер -------- */
+.container {
+  width: 90%;
+  max-width: 1000px;
+  margin: 2rem auto;
+}
+
+/* -------- Главная секция (Hero) -------- */
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 3rem;
+}
+.hero .avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 1rem;
+}
+.hero h1 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+.hero p {
+  color: #ccc;
+}
+
+/* -------- Проекты -------- */
+.projects, .articles {
+  margin-bottom: 2rem;
+}
+.projects h2, .articles h2 {
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  text-transform: uppercase;
+  border-bottom: 1px solid #444;
+  padding-bottom: 0.5rem;
+}
+.project-item {
+  background: #111;
+  border: 1px solid #444;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+.project-item h3 {
+  margin-bottom: 0.5rem;
+  color: #f35626;
+}
+.project-item .tags span {
+  display: inline-block;
+  background: #222;
+  padding: 0.2rem 0.5rem;
+  margin: 0.2rem;
+  border: 1px solid #444;
+  font-size: 0.85rem;
+}
+
+/* -------- Превью статьи -------- */
+.article-preview {
+  background: #111;
+  border: 1px solid #444;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+.article-preview h3 {
+  color: #f35626;
+  margin-bottom: 0.3rem;
+}
+.article-preview p {
+  color: #ccc;
+  margin-bottom: 0.3rem;
+}
+.article-preview small {
+  font-size: 0.8rem;
+  color: #888;
+}
+
+/* -------- Список статей -------- */
+.articles-list h1 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+}
+.article-preview h2 {
+  margin-bottom: 0.3rem;
+  color: #f35626;
+}
+.article-preview p {
+  color: #ccc;
+}
+
+/* -------- Подвал -------- */
+.site-footer {
+  border-top: 1px solid #444;
+  text-align: center;
+  padding: 1rem 0;
+  margin-top: 3rem;
+}
+.site-footer .quote {
+  font-style: italic;
+  margin-top: 0.5rem;
+  color: #aaa;
+}
+
+/* -------- Курсы -------- */
+.courses h1 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+}
+.course-item {
+  background: #111;
+  border: 1px solid #444;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+.course-item h2 {
+  margin-bottom: 0.5rem;
+  color: #f35626;
+}
+.btn {
+  background: #f35626;
+  color: #000;
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+.btn:hover {
+  background: #f78f40; /* более светлый оттенок */
+}
+
+/* -------- Статья блога (article.html) -------- */
+.blog-article h1 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  color: #f35626;
+}
+.blog-article .post-date {
+  color: #888;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+pre {
+  background: #222;
+  padding: 1rem;
+  overflow-x: auto;
+  border: 1px solid #444;
+  margin-bottom: 1rem;
+}
+code {
+  color: #f0f0f0;
+  font-family: "Courier New", monospace;
+}
