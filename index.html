@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Step3D.Lab — Главная</title>
   
-  <!-- Подключаем общий стиль и шрифты -->
+  <!-- Подключаем стили -->
   <link rel="stylesheet" href="css/style.css" />
-  <!-- Используем Montserrat -->
+  <!-- Подключаем шрифт Montserrat -->
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link 
     href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap&subset=cyrillic"
@@ -22,8 +22,8 @@
     }
     .stories {
       display: flex;
-      justify-content: center;
       gap: 1rem;
+      justify-content: center;
       flex-wrap: wrap;
       perspective: 800px;
     }
@@ -31,18 +31,15 @@
       width: 150px;
       height: 150px;
       position: relative;
+      overflow: hidden;
     }
     .cube {
       width: 100%;
       height: 100%;
       position: relative;
       transform-style: preserve-3d;
-      animation: spinCube 5s infinite linear;
-      cursor: pointer;
-    }
-    @keyframes spinCube {
-      from { transform: rotateY(0deg); }
-      to { transform: rotateY(360deg); }
+      transition: transform 0.3s ease;
+      /* Убираем автоматическую анимацию; поворот будет через JS */
     }
     .cube-face {
       position: absolute;
@@ -57,12 +54,12 @@
       font-size: 1rem;
       user-select: none;
     }
-    /* Определяем положение каждой стороны (только передняя сторона кликабельна) */
-    .cube-face.front  { transform: rotateY(  0deg) translateZ(75px); }
+    /* Положение сторон куба: только передняя сторона (class "front") кликабельна */
+    .cube-face.front  { transform: rotateY(0deg) translateZ(75px); }
     .cube-face.back   { transform: rotateY(180deg) translateZ(75px); }
-    .cube-face.right  { transform: rotateY( 90deg) translateZ(75px); }
+    .cube-face.right  { transform: rotateY(90deg) translateZ(75px); }
     .cube-face.left   { transform: rotateY(-90deg) translateZ(75px); }
-    .cube-face.top    { transform: rotateX( 90deg) translateZ(75px); }
+    .cube-face.top    { transform: rotateX(90deg) translateZ(75px); }
     .cube-face.bottom { transform: rotateX(-90deg) translateZ(75px); }
     
     /* Модальное окно для истории */
@@ -75,7 +72,6 @@
       width: 100%;
       height: 100%;
       background-color: rgba(0,0,0,0.9);
-      color: var(--text-color);
       overflow: auto;
       animation: fadeIn 0.3s forwards;
     }
@@ -84,43 +80,47 @@
       to { opacity: 1; }
     }
     .story-modal-content {
+      background-color: var(--bg-color);
       margin: 5% auto;
+      padding: 1.5rem;
+      border: 1px solid var(--border-color);
       width: 90%;
       max-width: 800px;
-      padding: 1.5rem;
-      background-color: var(--bg-color);
-      border: 1px solid var(--border-color);
       border-radius: 8px;
       position: relative;
     }
-    .story-modal .close-modal {
+    .close-modal {
       position: absolute;
       top: 0.5rem;
       right: 0.75rem;
-      font-size: 2rem;
+      font-size: 1.5rem;
       cursor: pointer;
       color: var(--accent-color);
     }
-    .story-modal .nav-buttons {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 1rem;
+    
+    /* Блок с 3D-эффектом внизу (аватарка) */
+    .bottom-banner {
+      margin: 2rem auto;
+      text-align: center;
+      perspective: 600px;
     }
-    .story-modal .nav-buttons button {
-      background-color: var(--accent-color);
-      color: var(--bg-color);
-      border: none;
-      padding: 0.5rem 1rem;
-      border-radius: 4px;
-      cursor: pointer;
-      text-transform: uppercase;
+    .bottom-avatar {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+    .bottom-avatar:hover {
+      transform: rotateY(20deg) rotateX(10deg);
     }
   </style>
 </head>
 <body>
-  <!-- Шапка с навигацией и кнопкой для Telegram -->
+  <!-- Шапка с навигацией, Telegram-кнопкой и переключателем темы -->
   <header class="site-header sticky-header">
     <nav class="navbar">
+      <!-- Логотип -->
       <div class="logo">
         <a href="index.html">Step3D.<span style="color: var(--accent-color);">Lab</span></a>
       </div>
@@ -130,30 +130,29 @@
         <li><a href="blog.html">Блог</a></li>
         <li><a href="ai-assistant.html">AI</a></li>
       </ul>
-      <!-- Кнопка Telegram -->
+      <!-- Кнопка для Telegram -->
       <a href="https://t.me/STEP_3D_Lab" class="telegram-btn" target="_blank">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="TG">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="TG" style="width:20px;height:20px;">
         Telegram
       </a>
-      <!-- Переключатель темы -->
+      <!-- Переключатель темы с лаконичными значками -->
       <div class="theme-toggle" id="theme-toggle" title="Переключить тему">
         <span class="theme-icon" id="theme-icon"></span>
       </div>
     </nav>
   </header>
-
+  
   <main class="container">
     <!-- Hero-секция -->
     <section class="hero">
       <h1>Добро пожаловать в Step3D.Lab!</h1>
       <p>Исследуйте мир аддитивных технологий, реверсивного инжиниринга и промышленного дизайна.</p>
     </section>
-
-    <!-- Секция сторис в виде вращающихся кубов -->
+    
+    <!-- Секция сторис в виде кубов (без автоматического вращения) -->
     <section class="stories-wrapper">
       <h2>Истории успеха</h2>
       <div class="stories">
-        <!-- Куб 1 -->
         <div class="cube-container">
           <div class="cube" data-story="1">
             <div class="cube-face front">История 1</div>
@@ -164,7 +163,6 @@
             <div class="cube-face bottom">Bottom</div>
           </div>
         </div>
-        <!-- Куб 2 -->
         <div class="cube-container">
           <div class="cube" data-story="2">
             <div class="cube-face front">История 2</div>
@@ -175,7 +173,6 @@
             <div class="cube-face bottom">Bottom</div>
           </div>
         </div>
-        <!-- Куб 3 -->
         <div class="cube-container">
           <div class="cube" data-story="3">
             <div class="cube-face front">История 3</div>
@@ -188,13 +185,13 @@
         </div>
       </div>
     </section>
-
+    
     <!-- Модальные окна для сторис -->
     <div class="story-modal" id="storyModal1">
       <div class="story-modal-content">
         <span class="close-modal">&times;</span>
         <h3>История №1</h3>
-        <p>Это подробное описание истории №1, показывающее успех и достижения благодаря аддитивным технологиям.</p>
+        <p>Подробное описание истории 1: как первый проект изменил подход к аддитивным технологиям.</p>
         <div class="nav-buttons">
           <button class="prev-story">Предыдущая</button>
           <button class="next-story">Следующая</button>
@@ -205,7 +202,7 @@
       <div class="story-modal-content">
         <span class="close-modal">&times;</span>
         <h3>История №2</h3>
-        <p>Детали истории №2. Здесь рассказывается о кейсе, вдохновляющем команду и пользователей.</p>
+        <p>Описание кейса №2 и его влияние на развитие технологий в отрасли.</p>
         <div class="nav-buttons">
           <button class="prev-story">Предыдущая</button>
           <button class="next-story">Следующая</button>
@@ -216,39 +213,39 @@
       <div class="story-modal-content">
         <span class="close-modal">&times;</span>
         <h3>История №3</h3>
-        <p>Подробная история №3 описывает, как расширение лаборатории привело к новым возможностям.</p>
+        <p>Детальный рассказ о том, как расширение лаборатории открыло новые горизонты.</p>
         <div class="nav-buttons">
           <button class="prev-story">Предыдущая</button>
           <button class="next-story">Следующая</button>
         </div>
       </div>
     </div>
-
+    
     <!-- Раздел Telegram-канала -->
     <section class="projects">
       <h2>Наш Telegram-канал</h2>
       <div class="project-item">
         <h3>Step3D.Lab в Telegram</h3>
-        <p>Подписывайтесь на наш канал, чтобы быть в курсе новостей и идей в области аддитивных технологий.</p>
+        <p>Подписывайтесь на наш канал для новостей и идей в области аддитивных технологий.</p>
         <div class="tags">
           <span>#htmlcssretro</span>
         </div>
         <p>Присоединяйтесь: <a href="https://t.me/STEP_3D_Lab" target="_blank">https://t.me/STEP_3D_Lab</a></p>
       </div>
     </section>
-
+    
     <!-- Раздел статей -->
     <section class="articles">
       <h2>Последние статьи</h2>
       <div class="article-preview">
         <h3><a href="article.html">Основы HTML</a></h3>
-        <p>Как создать самый простой HTML-файл? Разбираемся с основами и структурой.</p>
+        <p>Как создать самый простой HTML-файл? Разбираемся с тэгами и структурой.</p>
         <small>Dec 18, 2024 • 4 мин чтения</small>
       </div>
     </section>
   </main>
-
-  <!-- Подвал -->
+  
+  <!-- Подвал со ссылками на разделы и гениальной цитатой -->
   <footer class="site-footer">
     <div class="footer-links">
       <a href="index.html">Дом</a>
@@ -258,20 +255,26 @@
       <a href="https://t.me/STEP_3D_Lab" target="_blank">Telegram</a>
     </div>
     <p class="genius-quote">
-      "Гениальность – это способность смотреть в бездну и видеть новые миры, где каждая деталь становится произведением искусства."
+      "Гениальность – это смелость смотреть в бездну и создавать новые миры, где каждая деталь сияет смыслом."
     </p>
   </footer>
-
+  
+  <!-- Блок с 3D-эффектом внизу (фото-аватар) -->
+  <section class="bottom-banner">
+    <img src="https://github.com/STEP3DLab/Printing/blob/main/images/avatar.png?raw=true" alt="Step3D Lab Avatar" class="bottom-avatar">
+  </section>
+  
   <!-- Canvas-анимация -->
   <div class="canvas-container">
     <canvas id="mouseEffectCanvas"></canvas>
   </div>
-
+  
   <script>
-    /* Тема (светлая по умолчанию; переключатель тёмной темы) */
+    /* Переключение темы */
     const body = document.body;
     const themeToggleBtn = document.getElementById('theme-toggle');
     const themeIcon = document.getElementById('theme-icon');
+    // Используем светлую тему по умолчанию, если нет сохранённых настроек
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme === 'dark') {
       body.classList.add('dark');
@@ -353,6 +356,27 @@
     }
     animate();
     
+    /* Управление кубами-сторис: вращение по движению мыши внутри контейнера */
+    const cubes = document.querySelectorAll('.cube');
+    cubes.forEach(cube => {
+      cube.addEventListener('mousemove', (e) => {
+        const rect = cube.getBoundingClientRect();
+        // Вычисляем относительное положение курсора относительно контейнера
+        const offsetX = e.clientX - rect.left;
+        const offsetY = e.clientY - rect.top;
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        // Угол наклона: коэффициент умножения для элегантного эффекта
+        const angleY = ((offsetX - centerX) / centerX) * 15;
+        const angleX = -((offsetY - centerY) / centerY) * 15;
+        cube.style.transform = `rotateX(${angleX}deg) rotateY(${angleY}deg)`;
+      });
+      cube.addEventListener('mouseleave', () => {
+        // Вернуть в исходное положение плавно
+        cube.style.transform = `rotateX(0deg) rotateY(0deg)`;
+      });
+    });
+    
     /* Модальные окна для сторис */
     const storyCubes = document.querySelectorAll('.cube');
     const modals = {
@@ -362,22 +386,18 @@
     };
     storyCubes.forEach(cube => {
       cube.addEventListener('click', (e) => {
-        // Открываем модальное окно, если нажата передняя сторона
-        // Для простоты проверяем, что событие происходит на элементе с классом front
+        // Если нажата только передняя сторона (class 'front')
         if (e.target.classList.contains('front')) {
           const storyId = cube.dataset.story;
           modals[storyId].style.display = 'block';
         }
       });
     });
-    
-    // Закрытие модалок при клике на крестик
     document.querySelectorAll('.close-modal').forEach(btn => {
       btn.addEventListener('click', () => {
         btn.closest('.story-modal').style.display = 'none';
       });
     });
-    // Закрытие по клику вне контента модалки
     window.addEventListener('click', (e) => {
       if (e.target.classList.contains('story-modal')) {
         e.target.style.display = 'none';
