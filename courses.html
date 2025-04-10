@@ -2,182 +2,103 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Retro Blog — Курсы</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Step3D — Курсы</title>
+
   <link rel="stylesheet" href="css/style.css" />
-  <!-- Шрифт (PT Sans + кириллица) -->
+  <!-- Montserrat + display=swap -->
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;700&display=swap&subset=cyrillic" 
-        rel="stylesheet">
+  <link 
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap&subset=cyrillic" 
+    rel="stylesheet"
+  >
 </head>
 <body>
-  <header class="site-header">
+  <!-- Sticky header -->
+  <header class="site-header sticky-header">
     <nav class="navbar">
       <div class="logo">
-        <a href="index.html">Retro<span>Blog</span></a>
+        <a href="index.html">Step<span>3D</span></a>
       </div>
       <ul class="nav-links">
         <li><a href="index.html">home</a></li>
-        <li><a href="courses.html" class="active">courses</a></li>
+        <li class="dropdown">
+          <a href="courses.html" class="active dropbtn">courses ▾</a>
+          <div class="dropdown-content">
+            <a href="#R22_02">R22_02 Reverse Eng.</a>
+            <a href="#html-course">HTML/CSS Basics</a>
+            <a href="#other-courses">Другие курсы</a>
+          </div>
+        </li>
         <li><a href="blog.html">blog</a></li>
+        <li><a href="about.html">about</a></li>
       </ul>
-      <button id="theme-toggle" class="theme-toggle">Смена темы</button>
+      <div class="theme-toggle" id="theme-toggle" title="Переключить тему">
+        <span class="theme-icon" id="theme-icon"></span>
+      </div>
     </nav>
   </header>
 
   <main class="container">
-    <section class="courses">
-      <h1>Мои курсы</h1>
+    <section class="courses text-limited">
+      <h1>Наши Курсы</h1>
 
-      <!-- Пример одного курса (старый вариант) -->
+      <!-- Пример обычного курса -->
+      <article id="html-course" class="course-item">
+        <h2>Курс по HTML и CSS</h2>
+        <p>Подробный курс, начиная от самых основ и заканчивая адаптивной вёрсткой. Идеально 
+           для тех, кто хочет быстро стартовать в веб-разработке.</p>
+        <!-- Кнопка на полный план -->
+        <a class="btn" href="html_css_program.pdf" download>Скачать программу</a>
+      </article>
+
+      <!-- Пример второго курса -->
       <article class="course-item">
-        <h2>Курс по HTML</h2>
-        <p>Подробный курс, начиная от самых основ и заканчивая семантической вёрсткой.</p>
+        <h2>Курс по JS</h2>
+        <p>Быстрый старт в JavaScript, включая основы ES6, DOM, Ajax и создание SPA-приложений.</p>
         <a class="btn" href="#">Подробнее</a>
       </article>
 
-      <!-- Пример второго курса (старый вариант) -->
-      <article class="course-item">
-        <h2>Курс по CSS</h2>
-        <p>Изучаем каскадные таблицы стилей, адаптивную вёрстку и многое другое.</p>
-        <a class="btn" href="#">Подробнее</a>
-      </article>
-
-      <!-- Теперь добавляем ваш новый курс (R22_02) -->
-      <article class="course-item">
+      <!-- Курс R22_02 (полный текст КП) -->
+      <article id="R22_02" class="course-item">
         <h2>Курс «R22 Реверсивный инжиниринг и аддитивное производство»</h2>
-        <p>
-          <strong>КОММЕРЧЕСКОЕ ПРЕДЛОЖЕНИЕ № R22_02 от 10 апреля 2025</strong>
-          <br/># обучение #ДПО #РГСУ
-          <br/># аддитивные_технологии
-        </p>
-        <p>
-          <em>РЕВЕРСИВНЫЙ ИНЖИНИРИНГ и АДДИТИВНОЕ ПРОИЗВОДСТВО</em><br/>
-          #3D_сканирование, #3D_печать, #CAD #CAM #CAE
-        </p>
-        <p>
-          <strong>Уважаемые коллеги!</strong><br/>
-          Российский государственный социальный университет (РГСУ) ...
-          предлагает специализированные образовательные программы ...
-        </p>
-        <p>
-          <strong>Формат и структура обучения:</strong><br/>
-          Понедельник – пятница: 10:00 – 18:00<br/>
-          Суббота: 12:00 – 17:00<br/>
-          Старт: 19 мая 2025 года<br/>
-          Продолжительность: 48–144 акад. часов (каждый модуль ~48 часов) ...
-        </p>
-        <p>
-          <strong>Преимущества для участников:</strong><br/>
-          – Использование актуального ПО (Geomagic, T-Flex CAD и др.)<br/>
-          – Работа с 3D-сканерами RangeVision ...<br/>
-          – Сертификат гос. образца ...<br/>
-          – Возможность пройти отдельный модуль или весь курс.
-        </p>
-        <p>
-          <strong>Стоимость и календарь:</strong><br/>
-          Модулей: 1 (48 часов) — 68 000 ₽<br/>
-          Модулей: 2 (96 часов) — 120 000 ₽ (~12% экономия)<br/>
-          Модулей: 3 (144 часа) — 168 000 ₽ (~17% экономия)<br/>
-        </p>
-        <p>
-          Неделя 1 (19–25 мая): Базовый модуль<br/>
-          Неделя 2 (26 мая – 1 июня): Проектные задания ...<br/>
-          ...
-          Неделя 7–8 (30 июня – 13 июля): Подготовка и экзамен ...
-        </p>
-        <p>
-          <strong>Разработчики и преподаватели курса:</strong><br/>
-          – В.К. Ганьшин ...<br/>
-          – Х.А. Понкратова, гендиректор STEP_3Д ...<br/>
-          – А. Рекут, заведующий лабораторией ...<br/>
-          – М. Бакин ...<br/>
-          – И. Вакин ...
-        </p>
-        <p>
-          <strong>Адрес проведения:</strong> Москва, ул. Беговая, д. 12, Лаборатория промышленного дизайна и инжиниринга 
-          + ВКС (Zoom).
-        </p>
-        <p>Подробнее — в приложении к коммерческому предложению.</p>
-
-        <!-- Кнопка "Подробнее" или "Записаться" -->
-        <a class="btn" href="#">Узнать больше</a>
+        <p><strong>КОММЕРЧЕСКОЕ ПРЕДЛОЖЕНИЕ № R22_02</strong><br/>
+           Подходит всем, кто хочет углубиться в 3D-сканирование, моделирование и 3D-печать.</p>
+        <p><em>Старт: 19 мая 2025. Длительность — 48–144 академ. часов (гибкие модули).</em></p>
+        <ul>
+          <li>Использование актуального ПО (Geomagic, T-FLEX, Компас 3D и др.)</li>
+          <li>Работа с 3D-сканерами (RangeVision Helix, Spectrum...)</li>
+          <li>Сертификат гос. образца, демонстрационный экзамен</li>
+        </ul>
+        <a class="btn" href="R22_02_program.pdf" download>Скачать программу</a>
       </article>
+
+      <!-- Секция для прочих курсов -->
+      <div id="other-courses">
+        <h2>Другие курсы</h2>
+        <article class="course-item">
+          <h3>Прототипирование на ЧПУ</h3>
+          <p>Как быстро изготавливать прототипы на станках с ЧПУ. Инструменты, режимы резания, 
+             основы CAD/CAM.</p>
+          <a class="btn" href="#">Подробнее</a>
+        </article>
+        <!-- Добавляйте сколько нужно -->
+      </div>
     </section>
   </main>
 
-  <footer class="site-footer">
-    <p>© 2025 Retro Blog. All rights reserved.</p>
+  <footer class="site-footer text-limited">
+    <p>© 2025 Step3D. All rights reserved.</p>
   </footer>
 
-  <!-- Можно оставить анимационный canvas, если нужно на всех страницах -->
+  <!-- Canvas-анимация -->
   <div class="canvas-container">
     <canvas id="mouseEffectCanvas"></canvas>
   </div>
 
-  <!-- Скрипты: переключение темы и анимация (аналогично index.html) -->
-  <script>
-    const themeToggleBtn = document.getElementById('theme-toggle');
-    themeToggleBtn.addEventListener('click', () => {
-      document.body.classList.toggle('light');
-    });
-
-    const canvas = document.getElementById('mouseEffectCanvas');
-    const ctx = canvas.getContext('2d');
-    let w, h;
-
-    function resizeCanvas() {
-      w = canvas.width = canvas.offsetWidth;
-      h = canvas.height = canvas.offsetHeight;
-    }
-    window.addEventListener('resize', resizeCanvas);
-    resizeCanvas();
-
-    const particles = [];
-    class Particle {
-      constructor(x, y) {
-        this.x = x;
-        this.y = y;
-        this.radius = Math.random() * 8 + 2;
-        this.alpha = 1;
-        this.speedX = (Math.random() - 0.5) * 2;
-        this.speedY = (Math.random() - 0.5) * 2;
-      }
-      update() {
-        this.x += this.speedX;
-        this.y += this.speedY;
-        this.alpha -= 0.01;
-      }
-      draw() {
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(243, 86, 38, ${this.alpha})`;
-        ctx.fill();
-      }
-    }
-
-    canvas.addEventListener('mousemove', (e) => {
-      const rect = canvas.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      for (let i = 0; i < 3; i++) {
-        particles.push(new Particle(x, y));
-      }
-    });
-
-    function animate() {
-      requestAnimationFrame(animate);
-      ctx.clearRect(0, 0, w, h);
-      for (let i = 0; i < particles.length; i++) {
-        particles[i].update();
-        particles[i].draw();
-        if (particles[i].alpha <= 0) {
-          particles.splice(i, 1);
-          i--;
-        }
-      }
-    }
-    animate();
-  </script>
+  <script src="js/theme_and_canvas.js"></script>
+  <!-- Или можно скопировать тот же скрипт из index.html. 
+       Главное, чтобы идентификаторы (theme-toggle, theme-icon, mouseEffectCanvas) совпадали. 
+  -->
 </body>
 </html>
