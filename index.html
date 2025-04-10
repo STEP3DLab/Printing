@@ -8,8 +8,8 @@
   <link rel="stylesheet" href="css/style.css" />
   <!-- Подключаем шрифт Montserrat (поддержка кириллицы) -->
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link 
-    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap&subset=cyrillic" 
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap&subset=cyrillic"
     rel="stylesheet"
   >
 </head>
@@ -24,6 +24,8 @@
         <li><a href="index.html" class="active">home</a></li>
         <li><a href="courses.html">courses</a></li>
         <li><a href="blog.html">blog</a></li>
+        <!-- Если хотите ссылку на страницу с биографией -->
+        <li><a href="about.html">about</a></li>
       </ul>
       <!-- Кнопка переключения темы -->
       <button id="theme-toggle" class="theme-toggle">Смена темы</button>
@@ -33,11 +35,11 @@
   <!-- Основной контент -->
   <main class="container">
     <section class="hero">
-      <!-- Аватар по ссылке с GitHub -->
-      <img 
-        src="https://github.com/STEP3DLab/Printing/blob/main/images/avatar.png?raw=true" 
-        alt="Avatar" 
-        class="avatar" 
+      <!-- Аватар по ссылке с GitHub (raw) -->
+      <img
+        src="https://github.com/STEP3DLab/Printing/blob/main/images/avatar.png?raw=true"
+        alt="Avatar"
+        class="avatar"
       />
       <h1>Добро пожаловать в Step3D!</h1>
       <p>Здесь вы найдёте информацию о наших курсах, статьях и других проектах.</p>
@@ -52,6 +54,7 @@
           <span>html</span><span>css</span><span>retro</span>
         </div>
       </div>
+      <!-- Добавляйте свои проекты по необходимости -->
     </section>
 
     <section class="articles">
@@ -61,21 +64,22 @@
         <p>Как создать самый простой HTML-файл? Разбираемся с тэгами и структурой.</p>
         <small>Dec 18, 2024 • 4 мин чтения</small>
       </div>
+      <!-- Добавляйте дополнительные статьи, если нужно -->
     </section>
   </main>
 
-  <!-- Подвал -->
+  <!-- Подвал сайта -->
   <footer class="site-footer">
     <p>© 2025 Step3D. All rights reserved.</p>
     <p class="quote">"The symphony of silence plays best when butterflies wear tiny boots."</p>
   </footer>
 
-  <!-- Контейнер для анимации (в самом низу) -->
+  <!-- Контейнер для анимации в самом низу -->
   <div class="canvas-container">
     <canvas id="mouseEffectCanvas"></canvas>
   </div>
 
-  <!-- Скрипты: переключение темы и анимация -->
+  <!-- Скрипты: переключение темы и анимация под футером -->
   <script>
     /* ====== Переключение темы (dark/light) ====== */
     const themeToggleBtn = document.getElementById('theme-toggle');
@@ -114,11 +118,13 @@
       draw() {
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        // Вы можете подставить любую цветовую логику (var(--accent-color) и т.д.)
         ctx.fillStyle = `rgba(243, 86, 38, ${this.alpha})`;
         ctx.fill();
       }
     }
 
+    // Создаём несколько частиц при каждом движении мыши
     canvas.addEventListener('mousemove', (e) => {
       const rect = canvas.getBoundingClientRect();
       const x = e.clientX - rect.left;
@@ -128,12 +134,14 @@
       }
     });
 
+    // Анимационный цикл
     function animate() {
       requestAnimationFrame(animate);
       ctx.clearRect(0, 0, w, h);
       for (let i = 0; i < particles.length; i++) {
         particles[i].update();
         particles[i].draw();
+        // Удаляем «прозрачные» частицы
         if (particles[i].alpha <= 0) {
           particles.splice(i, 1);
           i--;
