@@ -2,305 +2,147 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Step3D.Lab — Главная</title>
-  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Step3D — Главная</title>
+
   <!-- Подключаем стили -->
   <link rel="stylesheet" href="css/style.css" />
-  <!-- Подключаем шрифт Montserrat -->
+  <!-- Подключаем Montserrat (display=swap для ускорения) -->
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link 
     href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap&subset=cyrillic"
     rel="stylesheet"
   >
-  
-  <style>
-    /* Дополнительные стили для 3D-кубов-сторис */
-    .stories-wrapper {
-      margin-bottom: 2rem;
-      text-align: center;
-    }
-    .stories {
-      display: flex;
-      gap: 1rem;
-      justify-content: center;
-      flex-wrap: wrap;
-      perspective: 800px;
-    }
-    .cube-container {
-      width: 150px;
-      height: 150px;
-      position: relative;
-      overflow: hidden;
-    }
-    .cube {
-      width: 100%;
-      height: 100%;
-      position: relative;
-      transform-style: preserve-3d;
-      transition: transform 0.3s ease;
-      /* Убираем автоматическую анимацию; поворот будет через JS */
-    }
-    .cube-face {
-      position: absolute;
-      width: 150px;
-      height: 150px;
-      background-color: var(--secondary-bg);
-      border: 1px solid var(--border-color);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: bold;
-      font-size: 1rem;
-      user-select: none;
-    }
-    /* Положение сторон куба: только передняя сторона (class "front") кликабельна */
-    .cube-face.front  { transform: rotateY(0deg) translateZ(75px); }
-    .cube-face.back   { transform: rotateY(180deg) translateZ(75px); }
-    .cube-face.right  { transform: rotateY(90deg) translateZ(75px); }
-    .cube-face.left   { transform: rotateY(-90deg) translateZ(75px); }
-    .cube-face.top    { transform: rotateX(90deg) translateZ(75px); }
-    .cube-face.bottom { transform: rotateX(-90deg) translateZ(75px); }
-    
-    /* Модальное окно для истории */
-    .story-modal {
-      display: none;
-      position: fixed;
-      z-index: 2000;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0,0,0,0.9);
-      overflow: auto;
-      animation: fadeIn 0.3s forwards;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-    .story-modal-content {
-      background-color: var(--bg-color);
-      margin: 5% auto;
-      padding: 1.5rem;
-      border: 1px solid var(--border-color);
-      width: 90%;
-      max-width: 800px;
-      border-radius: 8px;
-      position: relative;
-    }
-    .close-modal {
-      position: absolute;
-      top: 0.5rem;
-      right: 0.75rem;
-      font-size: 1.5rem;
-      cursor: pointer;
-      color: var(--accent-color);
-    }
-    
-    /* Блок с 3D-эффектом внизу (аватарка) */
-    .bottom-banner {
-      margin: 2rem auto;
-      text-align: center;
-      perspective: 600px;
-    }
-    .bottom-avatar {
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
-      object-fit: cover;
-      transition: transform 0.3s ease;
-    }
-    .bottom-avatar:hover {
-      transform: rotateY(20deg) rotateX(10deg);
-    }
-  </style>
 </head>
 <body>
-  <!-- Шапка с навигацией, Telegram-кнопкой и переключателем темы -->
+  <!-- Шапка сайта (sticky-header) -->
   <header class="site-header sticky-header">
     <nav class="navbar">
       <!-- Логотип -->
       <div class="logo">
-        <a href="index.html">Step3D.<span style="color: var(--accent-color);">Lab</span></a>
+        <a href="index.html">Step<span>3D</span></a>
       </div>
+
+      <!-- Навигация (примеры ссылок) -->
       <ul class="nav-links">
-        <li><a href="index.html" class="active">Дом</a></li>
-        <li><a href="projects.html">Проекты</a></li>
-        <li><a href="blog.html">Блог</a></li>
-        <li><a href="ai-assistant.html">AI</a></li>
+        <li><a href="index.html" class="active">home</a></li>
+        <!-- Пример dropdown (courses) -->
+        <li class="dropdown">
+          <a href="courses.html" class="dropbtn">courses ▾</a>
+          <div class="dropdown-content">
+            <a href="courses.html#R22_02">R22_02 Reverse Eng.</a>
+            <a href="courses.html#html-course">HTML/CSS Basics</a>
+            <a href="courses.html#other-courses">Другие курсы</a>
+          </div>
+        </li>
+        <li><a href="blog.html">blog</a></li>
+        <li><a href="about.html">about</a></li>
       </ul>
-      <!-- Кнопка для Telegram -->
-      <a href="https://t.me/STEP_3D_Lab" class="telegram-btn" target="_blank">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="TG" style="width:20px;height:20px;">
-        Telegram
-      </a>
-      <!-- Переключатель темы с лаконичными значками -->
+
+      <!-- Кнопка переключения темы -->
       <div class="theme-toggle" id="theme-toggle" title="Переключить тему">
         <span class="theme-icon" id="theme-icon"></span>
       </div>
     </nav>
   </header>
-  
+
+  <!-- Основной контент -->
   <main class="container">
     <!-- Hero-секция -->
-    <section class="hero">
-      <h1>Добро пожаловать в Step3D.Lab!</h1>
-      <p>Исследуйте мир аддитивных технологий, реверсивного инжиниринга и промышленного дизайна.</p>
+    <section class="hero text-limited">
+      <!-- lazy-loading для аватара -->
+      <img 
+        src="https://github.com/STEP3DLab/Printing/blob/main/images/avatar.png?raw=true"
+        alt="Avatar"
+        class="avatar"
+        loading="lazy"
+      />
+      <h1>Добро пожаловать в Step3D!</h1>
+      <p>Здесь вы найдёте информацию о наших курсах, статьях и других проектах. 
+         Мы продвигаем аддитивные технологии, реверсивный инжиниринг и промышленный дизайн.</p>
     </section>
-    
-    <!-- Секция сторис в виде кубов (без автоматического вращения) -->
-    <section class="stories-wrapper">
-      <h2>Истории успеха</h2>
-      <div class="stories">
-        <div class="cube-container">
-          <div class="cube" data-story="1">
-            <div class="cube-face front">История 1</div>
-            <div class="cube-face back">Back</div>
-            <div class="cube-face right">Right</div>
-            <div class="cube-face left">Left</div>
-            <div class="cube-face top">Top</div>
-            <div class="cube-face bottom">Bottom</div>
-          </div>
-        </div>
-        <div class="cube-container">
-          <div class="cube" data-story="2">
-            <div class="cube-face front">История 2</div>
-            <div class="cube-face back">Back</div>
-            <div class="cube-face right">Right</div>
-            <div class="cube-face left">Left</div>
-            <div class="cube-face top">Top</div>
-            <div class="cube-face bottom">Bottom</div>
-          </div>
-        </div>
-        <div class="cube-container">
-          <div class="cube" data-story="3">
-            <div class="cube-face front">История 3</div>
-            <div class="cube-face back">Back</div>
-            <div class="cube-face right">Right</div>
-            <div class="cube-face left">Left</div>
-            <div class="cube-face top">Top</div>
-            <div class="cube-face bottom">Bottom</div>
-          </div>
-        </div>
-      </div>
+
+    <!-- CTA-блок -->
+    <section class="cta-block">
+      <h2>Хотите узнать больше?</h2>
+      <p>Скачайте нашу брошюру обо всех программах Step3D.</p>
+      <!-- Пример кнопки (можно поменять ссылку) -->
+      <a href="brochure.pdf" class="btn cta-btn" download>Скачать брошюру (PDF)</a>
     </section>
-    
-    <!-- Модальные окна для сторис -->
-    <div class="story-modal" id="storyModal1">
-      <div class="story-modal-content">
-        <span class="close-modal">&times;</span>
-        <h3>История №1</h3>
-        <p>Подробное описание истории 1: как первый проект изменил подход к аддитивным технологиям.</p>
-        <div class="nav-buttons">
-          <button class="prev-story">Предыдущая</button>
-          <button class="next-story">Следующая</button>
-        </div>
-      </div>
-    </div>
-    <div class="story-modal" id="storyModal2">
-      <div class="story-modal-content">
-        <span class="close-modal">&times;</span>
-        <h3>История №2</h3>
-        <p>Описание кейса №2 и его влияние на развитие технологий в отрасли.</p>
-        <div class="nav-buttons">
-          <button class="prev-story">Предыдущая</button>
-          <button class="next-story">Следующая</button>
-        </div>
-      </div>
-    </div>
-    <div class="story-modal" id="storyModal3">
-      <div class="story-modal-content">
-        <span class="close-modal">&times;</span>
-        <h3>История №3</h3>
-        <p>Детальный рассказ о том, как расширение лаборатории открыло новые горизонты.</p>
-        <div class="nav-buttons">
-          <button class="prev-story">Предыдущая</button>
-          <button class="next-story">Следующая</button>
-        </div>
-      </div>
-    </div>
-    
-    <!-- Раздел Telegram-канала -->
-    <section class="projects">
-      <h2>Наш Telegram-канал</h2>
+
+    <!-- Раздел проектов -->
+    <section class="projects text-limited">
+      <h2>Проекты</h2>
       <div class="project-item">
-        <h3>Step3D.Lab в Telegram</h3>
-        <p>Подписывайтесь на наш канал для новостей и идей в области аддитивных технологий.</p>
+        <h3>Retro Website</h3>
+        <p>Классический «ретро»-стиль веб-дизайна. Пример использования HTML/CSS с неоновой палитрой.</p>
         <div class="tags">
-          <span>#htmlcssretro</span>
+          <span>html</span><span>css</span><span>retro</span>
         </div>
-        <p>Присоединяйтесь: <a href="https://t.me/STEP_3D_Lab" target="_blank">https://t.me/STEP_3D_Lab</a></p>
       </div>
+      <!-- Можно добавить другие проекты -->
     </section>
-    
+
     <!-- Раздел статей -->
-    <section class="articles">
+    <section class="articles text-limited">
       <h2>Последние статьи</h2>
       <div class="article-preview">
         <h3><a href="article.html">Основы HTML</a></h3>
         <p>Как создать самый простой HTML-файл? Разбираемся с тэгами и структурой.</p>
         <small>Dec 18, 2024 • 4 мин чтения</small>
       </div>
+      <!-- Добавляйте дополнительные статьи -->
     </section>
   </main>
-  
-  <!-- Подвал со ссылками на разделы и гениальной цитатой -->
-  <footer class="site-footer">
-    <div class="footer-links">
-      <a href="index.html">Дом</a>
-      <a href="projects.html">Проекты</a>
-      <a href="blog.html">Блог</a>
-      <a href="ai-assistant.html">AI</a>
-      <a href="https://t.me/STEP_3D_Lab" target="_blank">Telegram</a>
-    </div>
-    <p class="genius-quote">
-      "Гениальность – это смелость смотреть в бездну и создавать новые миры, где каждая деталь сияет смыслом."
-    </p>
+
+  <!-- Подвал сайта -->
+  <footer class="site-footer text-limited">
+    <p>© 2025 Step3D. All rights reserved.</p>
+    <p class="quote">"The symphony of silence plays best when butterflies wear tiny boots."</p>
   </footer>
-  
-  <!-- Блок с 3D-эффектом внизу (фото-аватар) -->
-  <section class="bottom-banner">
-    <img src="https://github.com/STEP3DLab/Printing/blob/main/images/avatar.png?raw=true" alt="Step3D Lab Avatar" class="bottom-avatar">
-  </section>
-  
-  <!-- Canvas-анимация -->
+
+  <!-- Контейнер для анимации (canvas) в самом низу -->
   <div class="canvas-container">
     <canvas id="mouseEffectCanvas"></canvas>
   </div>
-  
+
+  <!-- Скрипты: переключение темы + анимация -->
   <script>
-    /* Переключение темы */
+    /* ====== Переключение темы с сохранением в localStorage ====== */
     const body = document.body;
     const themeToggleBtn = document.getElementById('theme-toggle');
     const themeIcon = document.getElementById('theme-icon');
-    // Используем светлую тему по умолчанию, если нет сохранённых настроек
+
+    // Смотрим, не сохранена ли тема раньше
     const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'dark') {
-      body.classList.add('dark');
-      themeIcon.textContent = '☀️';
+    if (savedTheme) {
+      body.classList.toggle('light', savedTheme === 'light');
+      themeIcon.textContent = savedTheme === 'light' ? '🌙' : '☀️';
     } else {
-      body.classList.remove('dark');
-      themeIcon.textContent = '🌙';
+      // Если ничего не сохранено, пусть по умолчанию будет тёмная
+      themeIcon.textContent = '☀️';
     }
+
+    // При клике меняем класс
     themeToggleBtn.addEventListener('click', () => {
-      body.classList.toggle('dark');
-      const isDark = body.classList.contains('dark');
-      themeIcon.textContent = isDark ? '☀️' : '🌙';
-      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+      body.classList.toggle('light');
+      const isLight = body.classList.contains('light');
+      themeIcon.textContent = isLight ? '🌙' : '☀️';
+      localStorage.setItem('theme', isLight ? 'light' : 'dark');
     });
-    
-    /* Canvas-анимация */
+
+    /* ====== Canvas-анимация под футером ====== */
     const canvas = document.getElementById('mouseEffectCanvas');
     const ctx = canvas.getContext('2d');
     let w, h;
+
     function resizeCanvas() {
       w = canvas.width = canvas.offsetWidth;
       h = canvas.height = canvas.offsetHeight;
     }
     window.addEventListener('resize', resizeCanvas);
     resizeCanvas();
-    
+
     const particles = [];
     class Particle {
       constructor(x, y, color='243,86,38') {
@@ -324,7 +166,10 @@
         ctx.fill();
       }
     }
+
+    // Создаем частицы при движении мыши
     canvas.addEventListener('mousemove', (e) => {
+      // Чтобы не перегружать мобильные
       if (window.innerWidth < 768) return;
       const rect = canvas.getBoundingClientRect();
       const x = e.clientX - rect.left;
@@ -333,6 +178,8 @@
         particles.push(new Particle(x, y));
       }
     });
+
+    // При клике — частицы другого цвета (для «вау»-эффекта)
     canvas.addEventListener('click', (e) => {
       if (window.innerWidth < 768) return;
       const rect = canvas.getBoundingClientRect();
@@ -342,6 +189,7 @@
         particles.push(new Particle(x, y, '0,200,255'));
       }
     });
+
     function animate() {
       requestAnimationFrame(animate);
       ctx.clearRect(0, 0, w, h);
@@ -355,54 +203,6 @@
       }
     }
     animate();
-    
-    /* Управление кубами-сторис: вращение по движению мыши внутри контейнера */
-    const cubes = document.querySelectorAll('.cube');
-    cubes.forEach(cube => {
-      cube.addEventListener('mousemove', (e) => {
-        const rect = cube.getBoundingClientRect();
-        // Вычисляем относительное положение курсора относительно контейнера
-        const offsetX = e.clientX - rect.left;
-        const offsetY = e.clientY - rect.top;
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
-        // Угол наклона: коэффициент умножения для элегантного эффекта
-        const angleY = ((offsetX - centerX) / centerX) * 15;
-        const angleX = -((offsetY - centerY) / centerY) * 15;
-        cube.style.transform = `rotateX(${angleX}deg) rotateY(${angleY}deg)`;
-      });
-      cube.addEventListener('mouseleave', () => {
-        // Вернуть в исходное положение плавно
-        cube.style.transform = `rotateX(0deg) rotateY(0deg)`;
-      });
-    });
-    
-    /* Модальные окна для сторис */
-    const storyCubes = document.querySelectorAll('.cube');
-    const modals = {
-      1: document.getElementById('storyModal1'),
-      2: document.getElementById('storyModal2'),
-      3: document.getElementById('storyModal3')
-    };
-    storyCubes.forEach(cube => {
-      cube.addEventListener('click', (e) => {
-        // Если нажата только передняя сторона (class 'front')
-        if (e.target.classList.contains('front')) {
-          const storyId = cube.dataset.story;
-          modals[storyId].style.display = 'block';
-        }
-      });
-    });
-    document.querySelectorAll('.close-modal').forEach(btn => {
-      btn.addEventListener('click', () => {
-        btn.closest('.story-modal').style.display = 'none';
-      });
-    });
-    window.addEventListener('click', (e) => {
-      if (e.target.classList.contains('story-modal')) {
-        e.target.style.display = 'none';
-      }
-    });
   </script>
 </body>
 </html>
