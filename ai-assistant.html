@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Step3D.Lab — AI-ассистент</title>
-
+  
   <link rel="stylesheet" href="css/style.css">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link 
@@ -13,7 +13,7 @@
   >
   
   <style>
-    /* Примерный базовый стиль для чата */
+    /* Дополнительный стиль для чата */
     .chat-container {
       max-width: 700px;
       margin: 2rem auto;
@@ -78,14 +78,13 @@
       </div>
     </nav>
   </header>
-
+  
   <main class="container">
     <section class="chat-container text-limited">
       <h1>AI-ассистент по 3D</h1>
       <div class="chat-messages" id="chatMessages">
-        <!-- Пример сообщений -->
         <div class="chat-message">
-          <strong>AI-ассистент:</strong> Задавайте вопросы по 3D-печати, моделированию, сканированию...
+          <strong>AI-ассистент:</strong> Задавайте вопросы по 3D-печати, моделированию и сканированию...
         </div>
       </div>
       <div class="chat-input">
@@ -94,15 +93,15 @@
       </div>
     </section>
   </main>
-
+  
   <footer class="site-footer text-limited">
     <p>© 2025 Step3D.Lab. All rights reserved.</p>
   </footer>
-
+  
   <div class="canvas-container">
     <canvas id="mouseEffectCanvas"></canvas>
   </div>
-
+  
   <script>
     /* Тема */
     const body = document.body;
@@ -121,7 +120,7 @@
       themeIcon.textContent = isLight ? '🌙' : '☀️';
       localStorage.setItem('theme', isLight ? 'light' : 'dark');
     });
-
+    
     /* Canvas */
     const canvas = document.getElementById('mouseEffectCanvas');
     const ctx = canvas.getContext('2d');
@@ -187,29 +186,25 @@
     }
     animate();
 
-    /* Пример простого "чата" на фронтенде */
+    /* Простой чат-эмулятор */
     const chatMessages = document.getElementById('chatMessages');
     const userInput = document.getElementById('userInput');
     const sendBtn = document.getElementById('sendBtn');
-
     sendBtn.addEventListener('click', () => {
       const text = userInput.value.trim();
       if (!text) return;
-      // Показать сообщение от пользователя
-      const userMsgDiv = document.createElement('div');
-      userMsgDiv.classList.add('chat-message', 'user');
-      userMsgDiv.innerHTML = `<strong>Вы:</strong> ${text}`;
-      chatMessages.appendChild(userMsgDiv);
-
-      // Пример фейкового ответа от AI
-      const aiMsgDiv = document.createElement('div');
-      aiMsgDiv.classList.add('chat-message');
-      aiMsgDiv.innerHTML = `<strong>AI-ассистент:</strong> Вы спросили: "${text}". К сожалению, у меня нет сервера бэкенда, но я рад, что вы интересуетесь 3D-технологиями!`;
-      chatMessages.appendChild(aiMsgDiv);
-
-      // Прокрутка вниз
+      
+      const userMsg = document.createElement('div');
+      userMsg.classList.add('chat-message', 'user');
+      userMsg.innerHTML = `<strong>Вы:</strong> ${text}`;
+      chatMessages.appendChild(userMsg);
+      
+      const aiMsg = document.createElement('div');
+      aiMsg.classList.add('chat-message');
+      aiMsg.innerHTML = `<strong>AI-ассистент:</strong> Вы спросили: "${text}". Пожалуйста, уточните ваш вопрос для получения более подробной информации.`;
+      chatMessages.appendChild(aiMsg);
+      
       chatMessages.scrollTop = chatMessages.scrollHeight;
-      // Очищаем поле
       userInput.value = '';
     });
   </script>
