@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Step3D.Lab — Блог</title>
-
+  
   <link rel="stylesheet" href="css/style.css" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link 
@@ -40,15 +40,18 @@
   <main class="container">
     <section class="articles-list text-limited">
       <h1>Статьи</h1>
-
-      <!-- Статья о Владимире Константиновиче Ганьшине -->
+      
+      <!-- Статья о Владимире Ганьшине -->
       <article class="article-preview">
         <h2><a href="blog_ganshin.html">Владимир Константинович Ганьшин</a></h2>
-        <p>Руководитель технопарка (2019 – н.в.), член ученого совета РГСУ по стратегическому планированию...</p>
+        <p>
+          Руководитель технопарка (2019 – н.в.), член ученого совета РГСУ по стратегическому планированию и проектной деятельности (2023 – н.в.). 
+          #шахматы, #AI, #XR, #Step3D...
+        </p>
         <small>Apr 18, 2025 • 7 мин</small>
       </article>
-
-      <!-- Пример других статей -->
+      
+      <!-- Пример другой статьи -->
       <article class="article-preview">
         <h2><a href="article.html">Основы HTML</a></h2>
         <p>Как создать самый простой HTML-файл? Разбираемся с тэгами и структурой.</p>
@@ -56,15 +59,15 @@
       </article>
     </section>
   </main>
-
+  
   <footer class="site-footer text-limited">
     <p>© 2025 Step3D.Lab. All rights reserved.</p>
   </footer>
-
+  
   <div class="canvas-container">
     <canvas id="mouseEffectCanvas"></canvas>
   </div>
-
+  
   <script>
     /* Тема */
     const body = document.body;
@@ -83,7 +86,7 @@
       themeIcon.textContent = isLight ? '🌙' : '☀️';
       localStorage.setItem('theme', isLight ? 'light' : 'dark');
     });
-
+    
     /* Canvas */
     const canvas = document.getElementById('mouseEffectCanvas');
     const ctx = canvas.getContext('2d');
