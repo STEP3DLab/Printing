@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Step3D.Lab — AI-ассистент</title>
+
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link 
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap&subset=cyrillic" 
+    rel="stylesheet"
+  >
+  
+  <style>
+    /* Примерный базовый стиль для чата */
+    .chat-container {
+      max-width: 700px;
+      margin: 2rem auto;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 1rem;
+      background: var(--secondary-bg);
+    }
+    .chat-messages {
+      height: 400px;
+      overflow-y: auto;
+      margin-bottom: 1rem;
+      padding: 0.5rem;
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+    }
+    .chat-message {
+      margin-bottom: 0.5rem;
+    }
+    .chat-message.user {
+      text-align: right;
+      color: var(--accent-color);
+    }
+    .chat-input {
+      display: flex;
+      gap: 0.5rem;
+    }
+    .chat-input input {
+      flex: 1;
+      padding: 0.5rem;
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      color: var(--text-color);
+      background: var(--bg-color);
+    }
+    .chat-input button {
+      padding: 0.5rem 1rem;
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header sticky-header">
+    <nav class="navbar">
+      <div class="logo">
+        <a href="index.html">Step3D.<span style="color: var(--accent-color);">Lab</span></a>
+      </div>
+      <ul class="nav-links">
+        <li><a href="index.html">Дом</a></li>
+        <li class="dropdown">
+          <a href="courses.html" class="dropbtn">Курсы ▾</a>
+          <div class="dropdown-content">
+            <a href="courses.html#R22_02">R22_02 Reverse Eng.</a>
+            <a href="courses.html#html-course">HTML/CSS Basics</a>
+            <a href="courses.html#other-courses">Другие курсы</a>
+          </div>
+        </li>
+        <li><a href="blog.html">Блог</a></li>
+        <li><a href="ai-assistant.html" class="active">AI-ассистент</a></li>
+      </ul>
+      <div class="theme-toggle" id="theme-toggle" title="Переключить тему">
+        <span class="theme-icon" id="theme-icon"></span>
+      </div>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="chat-container text-limited">
+      <h1>AI-ассистент по 3D</h1>
+      <div class="chat-messages" id="chatMessages">
+        <!-- Пример сообщений -->
+        <div class="chat-message">
+          <strong>AI-ассистент:</strong> Задавайте вопросы по 3D-печати, моделированию, сканированию...
+        </div>
+      </div>
+      <div class="chat-input">
+        <input type="text" id="userInput" placeholder="Ваш вопрос..." />
+        <button class="btn" id="sendBtn">Отправить</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer text-limited">
+    <p>© 2025 Step3D.Lab. All rights reserved.</p>
+  </footer>
+
+  <div class="canvas-container">
+    <canvas id="mouseEffectCanvas"></canvas>
+  </div>
+
+  <script>
+    /* Тема */
+    const body = document.body;
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const themeIcon = document.getElementById('theme-icon');
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+      body.classList.toggle('light', savedTheme === 'light');
+      themeIcon.textContent = savedTheme === 'light' ? '🌙' : '☀️';
+    } else {
+      themeIcon.textContent = '☀️';
+    }
+    themeToggleBtn.addEventListener('click', () => {
+      body.classList.toggle('light');
+      const isLight = body.classList.contains('light');
+      themeIcon.textContent = isLight ? '🌙' : '☀️';
+      localStorage.setItem('theme', isLight ? 'light' : 'dark');
+    });
+
+    /* Canvas */
+    const canvas = document.getElementById('mouseEffectCanvas');
+    const ctx = canvas.getContext('2d');
+    let w, h;
+    function resizeCanvas() {
+      w = canvas.width = canvas.offsetWidth;
+      h = canvas.height = canvas.offsetHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+    const particles = [];
+    class Particle {
+      constructor(x, y, color='243,86,38') {
+        this.x = x;
+        this.y = y;
+        this.radius = Math.random() * 8 + 2;
+        this.alpha = 1;
+        this.speedX = (Math.random() - 0.5) * 2;
+        this.speedY = (Math.random() - 0.5) * 2;
+        this.color = color;
+      }
+      update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+        this.alpha -= 0.01;
+      }
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(${this.color}, ${this.alpha})`;
+        ctx.fill();
+      }
+    }
+    canvas.addEventListener('mousemove', (e) => {
+      if (window.innerWidth < 768) return;
+      const rect = canvas.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      for (let i = 0; i < 3; i++) {
+        particles.push(new Particle(x, y));
+      }
+    });
+    canvas.addEventListener('click', (e) => {
+      if (window.innerWidth < 768) return;
+      const rect = canvas.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      for (let i = 0; i < 5; i++) {
+        particles.push(new Particle(x, y, '0,200,255'));
+      }
+    });
+    function animate() {
+      requestAnimationFrame(animate);
+      ctx.clearRect(0, 0, w, h);
+      for (let i = 0; i < particles.length; i++) {
+        particles[i].update();
+        particles[i].draw();
+        if (particles[i].alpha <= 0) {
+          particles.splice(i, 1);
+          i--;
+        }
+      }
+    }
+    animate();
+
+    /* Пример простого "чата" на фронтенде */
+    const chatMessages = document.getElementById('chatMessages');
+    const userInput = document.getElementById('userInput');
+    const sendBtn = document.getElementById('sendBtn');
+
+    sendBtn.addEventListener('click', () => {
+      const text = userInput.value.trim();
+      if (!text) return;
+      // Показать сообщение от пользователя
+      const userMsgDiv = document.createElement('div');
+      userMsgDiv.classList.add('chat-message', 'user');
+      userMsgDiv.innerHTML = `<strong>Вы:</strong> ${text}`;
+      chatMessages.appendChild(userMsgDiv);
+
+      // Пример фейкового ответа от AI
+      const aiMsgDiv = document.createElement('div');
+      aiMsgDiv.classList.add('chat-message');
+      aiMsgDiv.innerHTML = `<strong>AI-ассистент:</strong> Вы спросили: "${text}". К сожалению, у меня нет сервера бэкенда, но я рад, что вы интересуетесь 3D-технологиями!`;
+      chatMessages.appendChild(aiMsgDiv);
+
+      // Прокрутка вниз
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+      // Очищаем поле
+      userInput.value = '';
+    });
+  </script>
+</body>
+</html>
