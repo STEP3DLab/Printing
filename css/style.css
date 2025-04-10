@@ -1,52 +1,74 @@
-/* ----- Базовые настройки (переменные для тёмной темы по умолчанию) ----- */
+/* =========================
+   Тёмная/светлая тема
+   (по умолчанию темная)
+========================= */
 :root {
-  --bg-color: #000000;       /* Тёмный фон */
-  --text-color: #ffffff;     /* Белый текст */
-  --accent-color: #f35626;   /* Оранжево-красный акцент */
+  --bg-color: #000000;
+  --text-color: #ffffff;
+  --accent-color: #f35626; /* Оранжевый */
   --secondary-bg: #111111;
   --border-color: #444444;
-  --font-main: 'Montserrat', sans-serif;  /* <--- Montserrat */
+  --font-main: 'Montserrat', sans-serif;
+  --transition-speed: 0.3s;
 }
 
-/* ----- Светлая тема (активируется через body.light) ----- */
+/* Светлая тема, активна когда у body есть класс .light */
 body.light {
-  --bg-color: #ffffff;       /* Светлый фон */
-  --text-color: #000000;     /* Тёмный текст */
-  --accent-color: #e64f26;   
+  --bg-color: #ffffff;
+  --text-color: #000000;
+  --accent-color: #e64f26; /* Можно чуть другой оранжевый */
   --secondary-bg: #f2f2f2;
   --border-color: #cccccc;
 }
 
-/* Сброс и базовые стили */
+/* Плавный переход при смене темы (7) */
 * {
-  margin: 0;
-  padding: 0;
+  transition: background-color var(--transition-speed) ease, 
+              color var(--transition-speed) ease,
+              border-color var(--transition-speed) ease;
+  margin: 0; 
+  padding: 0; 
   box-sizing: border-box;
 }
 
+/* Базовые настройки */
 html, body {
   background-color: var(--bg-color);
   color: var(--text-color);
   font-family: var(--font-main);
   font-size: 16px;
-  line-height: 1.5;
+  line-height: 1.7; /* (2) Увеличенный line-height */
+  min-height: 100%;
 }
 
+/* Ограничиваем длину строки (11) */
+.text-limited {
+  max-width: 60ch; /* ~60-70 символов */
+  margin-left: auto;
+  margin-right: auto;
+  padding: 1rem;
+}
+
+/* Ссылки и hover-эффекты (4) */
 a {
   color: var(--text-color);
   text-decoration: none;
+  transition: color 0.2s ease;
 }
 a:hover {
+  color: var(--accent-color);
   text-decoration: underline;
 }
 
-/* ----- Шапка и меню ----- */
-.site-header {
+/* Шапка (sticky-header) (18) */
+.sticky-header {
+  position: sticky;
+  top: 0;
+  z-index: 999;
   background-color: var(--bg-color);
-  border-bottom: 1px solid var(--border-color);
-  padding: 1rem 0;
 }
 
+/* Навигация */
 .navbar {
   display: flex;
   align-items: center;
@@ -56,15 +78,17 @@ a:hover {
   margin: 0 auto;
 }
 
+/* Логотип */
 .logo a {
   font-size: 1.5rem;
-  text-transform: uppercase;
   font-weight: bold;
+  text-transform: uppercase;
 }
 .logo a span {
   color: var(--accent-color);
 }
 
+/* Список навигации */
 .nav-links {
   list-style: none;
   display: flex;
@@ -72,42 +96,70 @@ a:hover {
 }
 
 .nav-links li a {
-  text-transform: lowercase;
-  transition: color 0.2s ease;
-  padding: 0.25rem 0.5rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 4px;
 }
 .nav-links li a.active,
 .nav-links li a:hover {
+  background-color: var(--secondary-bg);
   color: var(--accent-color);
 }
 
-/* Кнопка переключения темы */
-.theme-toggle {
-  background: var(--accent-color);
-  color: var(--bg-color);
-  border: none;
-  padding: 0.5rem 1rem;
-  cursor: pointer;
-  text-transform: uppercase;
+/* Выпадающее меню (15) */
+.dropdown {
+  position: relative;
 }
-.theme-toggle:hover {
-  opacity: 0.8;
+.dropbtn {
+  cursor: pointer;
+}
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: var(--bg-color);
+  border: 1px solid var(--border-color);
+  min-width: 150px;
+  top: 100%;
+  left: 0;
+  padding: 0.5rem 0;
+  flex-direction: column;
+}
+.dropdown-content a {
+  display: block;
+  padding: 0.5rem 1rem;
+  white-space: nowrap;
+}
+.dropdown:hover .dropdown-content {
+  display: block;
 }
 
-/* ----- Контейнер ----- */
+/* Кнопка переключения темы с иконками */
+.theme-toggle {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  font-size: 1.2rem;
+  border-radius: 4px;
+}
+.theme-icon {
+  display: inline-block;
+  width: 24px;
+  text-align: center;
+}
+
+/* Контейнер */
 .container {
   width: 90%;
   max-width: 1000px;
   margin: 2rem auto;
 }
 
-/* ----- Hero-секция ----- */
+/* Hero-секция */
 .hero {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   text-align: center;
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
 }
 .hero .avatar {
   width: 120px;
@@ -116,44 +168,70 @@ a:hover {
   object-fit: cover;
   margin-bottom: 1rem;
 }
-.hero h1 {
-  font-size: 2rem;
+
+/* CTA-блок (9) */
+.cta-block {
+  background-color: var(--secondary-bg);
+  text-align: center;
+  padding: 2rem;
+  margin: 2rem 0;
+}
+.cta-block h2 {
   margin-bottom: 0.5rem;
 }
-.hero p {
-  color: #ccc;
+.cta-btn {
+  margin-top: 1rem;
+  font-size: 1rem;
+  font-weight: bold;
 }
 
-/* ----- Проекты/статьи ----- */
-.projects, .articles {
+/* Projects, articles и т. д. */
+.projects, .articles, .courses {
   margin-bottom: 2rem;
 }
-.projects h2, .articles h2 {
+.projects h2, .articles h2, .courses h1 {
   margin-bottom: 1rem;
   font-size: 1.5rem;
   text-transform: uppercase;
   border-bottom: 1px solid var(--border-color);
   padding-bottom: 0.5rem;
 }
-.project-item, .article-preview {
+
+/* Карточки проектов, курсов, статей */
+.project-item, .course-item, .article-preview {
   background: var(--secondary-bg);
   border: 1px solid var(--border-color);
   padding: 1rem;
   margin-bottom: 1rem;
+  border-radius: 4px;
 }
-.project-item h3, .article-preview h3 {
+.project-item h3, .course-item h2, .article-preview h2 {
   color: var(--accent-color);
 }
-.article-preview p {
-  color: #ccc;
+
+/* Кнопка (с микроанимацией) (26) */
+.btn {
+  display: inline-block;
+  background-color: var(--accent-color);
+  color: var(--bg-color);
+  padding: 0.5rem 1rem;
+  text-transform: uppercase;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+.btn:hover {
+  transform: scale(1.05);
+  opacity: 0.9;
 }
 
-/* ----- Подвал ----- */
+/* Подвал */
 .site-footer {
   border-top: 1px solid var(--border-color);
   text-align: center;
   padding: 1rem 0;
-  margin-top: 3rem;
+  margin-top: 2rem;
 }
 .site-footer .quote {
   font-style: italic;
@@ -161,38 +239,7 @@ a:hover {
   color: #aaa;
 }
 
-/* ----- Курсы (если есть) ----- */
-.courses h1 {
-  font-size: 2rem;
-  margin-bottom: 1rem;
-  text-transform: uppercase;
-}
-.course-item {
-  background: var(--secondary-bg);
-  border: 1px solid var(--border-color);
-  padding: 1rem;
-  margin-bottom: 1rem;
-}
-.course-item h2 {
-  margin-bottom: 0.5rem;
-  color: var(--accent-color);
-}
-.btn {
-  background: var(--accent-color);
-  color: var(--bg-color);
-  display: inline-block;
-  padding: 0.5rem 1rem;
-  text-transform: uppercase;
-  border: none;
-  cursor: pointer;
-  transition: background 0.2s ease;
-  margin-top: 0.5rem;
-}
-.btn:hover {
-  opacity: 0.8;
-}
-
-/* ----- Статья блога (article.html) ----- */
+/* Статья (article.html) */
 .blog-article h1 {
   font-size: 2rem;
   margin-bottom: 0.5rem;
@@ -204,27 +251,82 @@ a:hover {
   margin-bottom: 1rem;
 }
 pre {
-  background: #222;
+  background: #222; 
   padding: 1rem;
   overflow-x: auto;
-  border: 1px solid var(--border-color);
   margin-bottom: 1rem;
+  border: 1px solid var(--border-color);
 }
 code {
-  color: #f0f0f0;
-  font-family: 'Courier New', monospace; /* или Montserrat Mono, если нужно */
+  font-family: "Courier New", monospace;
 }
 
-/* ----- Canvas-анимация внизу ----- */
+/* Прогресс-бар (article.html) (17) */
+#progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 4px;
+  width: 0;
+  background: var(--accent-color);
+  z-index: 1000;
+  transition: width 0.1s ease-out;
+}
+
+/* Хлебные крошки (16) */
+.breadcrumbs {
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+.breadcrumbs a {
+  color: var(--accent-color);
+  text-decoration: underline;
+}
+
+/* Кнопка «Назад» (8) */
+.back-link {
+  margin-bottom: 1rem;
+}
+
+/* Аккордеон (5) в about.html */
+.accordion {
+  margin-bottom: 2rem;
+}
+.accordion-btn {
+  background: var(--secondary-bg);
+  color: var(--text-color);
+  width: 100%;
+  text-align: left;
+  padding: 1rem;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  border-bottom: 1px solid var(--border-color);
+  font-weight: bold;
+  transition: background-color 0.2s ease;
+}
+.accordion-btn:hover {
+  background-color: var(--border-color);
+}
+.accordion-panel {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.2s ease-out;
+  padding: 0 1rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+/* Canvas */
 .canvas-container {
   position: relative;
   width: 100%;
-  height: 300px; /* Высота анимационного блока */
+  height: 300px; 
   overflow: hidden;
 }
 #mouseEffectCanvas {
   position: absolute;
-  top: 0; left: 0;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
 }
