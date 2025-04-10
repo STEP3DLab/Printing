@@ -1,31 +1,60 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Retro Blog — Основы HTML</title>
-  <link rel="stylesheet" href="css/style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Step3D — Статья</title>
+
+  <link rel="stylesheet" href="css/style.css">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;700&display=swap&subset=cyrillic" 
-        rel="stylesheet">
+  <link 
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap&subset=cyrillic" 
+    rel="stylesheet"
+  >
 </head>
 <body>
-  <header class="site-header">
+  <!-- Sticky header -->
+  <header class="site-header sticky-header">
     <nav class="navbar">
       <div class="logo">
-        <a href="index.html">Retro<span>Blog</span></a>
+        <a href="index.html">Step<span>3D</span></a>
       </div>
       <ul class="nav-links">
         <li><a href="index.html">home</a></li>
-        <li><a href="courses.html">courses</a></li>
+        <li class="dropdown">
+          <a href="courses.html" class="dropbtn">courses ▾</a>
+          <div class="dropdown-content">
+            <a href="courses.html#R22_02">R22_02 Reverse Eng.</a>
+            <a href="courses.html#html-course">HTML/CSS Basics</a>
+            <a href="courses.html#other-courses">Другие курсы</a>
+          </div>
+        </li>
         <li><a href="blog.html" class="active">blog</a></li>
+        <li><a href="about.html">about</a></li>
       </ul>
-      <button id="theme-toggle" class="theme-toggle">Смена темы</button>
+      <div class="theme-toggle" id="theme-toggle" title="Переключить тему">
+        <span class="theme-icon" id="theme-icon"></span>
+      </div>
     </nav>
   </header>
 
+  <!-- Прогресс-бар прокрутки (17) -->
+  <div id="progress-bar"></div>
+
   <main class="container">
-    <article class="blog-article">
+    <!-- Хлебные крошки (16) -->
+    <nav class="breadcrumbs text-limited">
+      <a href="index.html">Главная</a> → 
+      <a href="blog.html">Блог</a> → 
+      <span>Статья</span>
+    </nav>
+
+    <!-- Кнопка «Назад» (8) -->
+    <div class="back-link text-limited">
+      <a href="blog.html" class="btn">&larr; Назад к блогу</a>
+    </div>
+
+    <article class="blog-article text-limited">
       <h1>Основы HTML</h1>
       <p class="post-date">Dec 18, 2024 • 4 мин</p>
 
@@ -46,29 +75,48 @@
         &lt;/body&gt;
       &lt;/html&gt;
       </code></pre>
+
       <p>... и так далее ...</p>
     </article>
   </main>
 
-  <footer class="site-footer">
-    <p>© 2025 Retro Blog. All rights reserved.</p>
+  <footer class="site-footer text-limited">
+    <p>© 2025 Step3D. All rights reserved.</p>
   </footer>
 
-  <!-- Аналогично, если нужно, добавляем анимацию -->
   <div class="canvas-container">
     <canvas id="mouseEffectCanvas"></canvas>
   </div>
+
   <script>
-    /* Переключение темы */
+    /* Подключаем тему + canvas, 
+       но добавим тут прогресс-бар прокрутки (17). */
+
+    const body = document.body;
     const themeToggleBtn = document.getElementById('theme-toggle');
+    const themeIcon = document.getElementById('theme-icon');
+
+    // Восстанавливаем тему из localStorage
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+      body.classList.toggle('light', savedTheme === 'light');
+      themeIcon.textContent = savedTheme === 'light' ? '🌙' : '☀️';
+    } else {
+      themeIcon.textContent = '☀️';
+    }
+
     themeToggleBtn.addEventListener('click', () => {
-      document.body.classList.toggle('light');
+      body.classList.toggle('light');
+      const isLight = body.classList.contains('light');
+      themeIcon.textContent = isLight ? '🌙' : '☀️';
+      localStorage.setItem('theme', isLight ? 'light' : 'dark');
     });
 
-    /* Анимация canvas */
+    // Canvas-анимация (скопируем упрощённый вариант)
     const canvas = document.getElementById('mouseEffectCanvas');
     const ctx = canvas.getContext('2d');
     let w, h;
+
     function resizeCanvas() {
       w = canvas.width = canvas.offsetWidth;
       h = canvas.height = canvas.offsetHeight;
@@ -77,14 +125,16 @@
     resizeCanvas();
 
     const particles = [];
+
     class Particle {
-      constructor(x, y) {
+      constructor(x, y, color) {
         this.x = x;
         this.y = y;
         this.radius = Math.random() * 8 + 2;
         this.alpha = 1;
         this.speedX = (Math.random() - 0.5) * 2;
         this.speedY = (Math.random() - 0.5) * 2;
+        this.color = color;
       }
       update() {
         this.x += this.speedX;
@@ -94,17 +144,18 @@
       draw() {
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(243, 86, 38, ${this.alpha})`;
+        ctx.fillStyle = `rgba(${this.color}, ${this.alpha})`;
         ctx.fill();
       }
     }
 
     canvas.addEventListener('mousemove', (e) => {
+      if (window.innerWidth < 768) return;
       const rect = canvas.getBoundingClientRect();
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
       for (let i = 0; i < 3; i++) {
-        particles.push(new Particle(x, y));
+        particles.push(new Particle(x, y, '243,86,38'));
       }
     });
 
@@ -121,6 +172,9 @@
       }
     }
     animate();
-  </script>
-</body>
-</html>
+
+    // Прогресс-бар прокрутки
+    const progressBar = document.getElementById('progress-bar');
+
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.scrollY;
