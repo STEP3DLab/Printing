@@ -3,29 +3,86 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Step3D.Lab — Курсы</title>
+  <title>Step3D.Lab — Главная</title>
   
+  <!-- Подключаем стили -->
   <link rel="stylesheet" href="css/style.css" />
+  <!-- Подключаем шрифт Montserrat с display=swap -->
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link 
     href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap&subset=cyrillic"
     rel="stylesheet"
   >
+  
+  <style>
+    /* Дополнительные стили для модальных окон историй и сторис */
+    .stories {
+      display: flex;
+      gap: 1rem;
+      justify-content: space-around;
+      margin-top: 1rem;
+    }
+    .story-card {
+      width: 200px;
+      text-align: center;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+    .story-card:hover {
+      transform: scale(1.05);
+    }
+    .story-card img {
+      width: 100%;
+      border-radius: 8px;
+    }
+    .story-modal {
+      display: none; /* Скрыто по умолчанию */
+      position: fixed;
+      z-index: 1500;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.8);
+    }
+    .story-modal-content {
+      background-color: var(--bg-color);
+      margin: 10% auto;
+      padding: 2rem;
+      border: 1px solid var(--border-color);
+      width: 80%;
+      max-width: 500px;
+      border-radius: 8px;
+      position: relative;
+    }
+    .close-modal {
+      position: absolute;
+      top: 0.5rem;
+      right: 1rem;
+      font-size: 2rem;
+      cursor: pointer;
+      color: var(--accent-color);
+    }
+  </style>
 </head>
 <body>
+  <!-- Шапка сайта -->
   <header class="site-header sticky-header">
     <nav class="navbar">
+      <!-- Логотип с выделением "Lab" оранжевым -->
       <div class="logo">
         <a href="index.html">Step3D.<span style="color: var(--accent-color);">Lab</span></a>
       </div>
+      <!-- Навигация на русском -->
       <ul class="nav-links">
-        <li><a href="index.html">Дом</a></li>
+        <li><a href="index.html" class="active">Дом</a></li>
         <li class="dropdown">
-          <a href="courses.html" class="active dropbtn">Курсы ▾</a>
+          <a href="courses.html" class="dropbtn">Курсы ▾</a>
           <div class="dropdown-content">
-            <a href="#R22_02">R22_02 Reverse Eng.</a>
-            <a href="#html-course">HTML/CSS Basics</a>
-            <a href="#other-courses">Другие курсы</a>
+            <a href="courses.html#R22_02">R22_02 Reverse Eng.</a>
+            <a href="courses.html#html-course">HTML/CSS Basics</a>
+            <a href="courses.html#other-courses">Другие курсы</a>
           </div>
         </li>
         <li><a href="blog.html">Блог</a></li>
@@ -38,64 +95,93 @@
   </header>
   
   <main class="container">
-    <section class="courses text-limited">
-      <h1>Наши Курсы</h1>
-      <div class="courses-grid">
-        <article id="html-course" class="course-item fancy-card">
-          <h2>Курс по HTML и CSS</h2>
-          <p>
-            Подробный курс, начинающий с основ и заканчивающий адаптивной вёрсткой. Для быстрого старта в веб-разработке.
-          </p>
-          <button class="btn">Подробнее</button>
-        </article>
-        
-        <article class="course-item fancy-card">
-          <h2>Курс по JavaScript</h2>
-          <p>
-            Быстрый старт в JavaScript: основы ES6, работа с DOM и создание SPA. Для тех, кто знаком с версткой.
-          </p>
-          <button class="btn">Подробнее</button>
-        </article>
-        
-        <article id="R22_02" class="course-item fancy-card">
-          <h2>«R22» Реверсивный инжиниринг и аддитивное производство</h2>
-          <p>
-            Специализированный курс для углублённого изучения 3D-сканирования, моделирования и 3D-печати.
-          </p>
-          <ul>
-            <li>Использование ПО: Geomagic, T-Flex CAD, Компас 3D и др.</li>
-            <li>Работа с 3D-сканерами (RangeVision Helix, Spectrum)</li>
-          </ul>
-          <button class="btn">Скачать программу (PDF)</button>
-        </article>
-        
-        <article class="course-item fancy-card">
-          <h2>Прототипирование на ЧПУ</h2>
-          <p>
-            Быстрое изготовление прототипов: режимы резания, базовый CAD/CAM и постпроцессоры.
-          </p>
-          <button class="btn">Подробнее</button>
-        </article>
-        
-        <article class="course-item fancy-card">
-          <h2>Основы Python</h2>
-          <p>
-            Курс для начинающих: от простых скриптов до базового анализа данных. Идеален для первых шагов в программировании.
-          </p>
-          <button class="btn">Подробнее</button>
-        </article>
+    <!-- Hero-секция -->
+    <section class="hero text-limited">
+      <h1>Добро пожаловать в Step3D.Lab!</h1>
+      <p>Здесь вы узнаете всё про аддитивные технологии, реверсивный инжиниринг и промышленный дизайн.</p>
+    </section>
+    
+    <!-- Блок сторис: 3 карточки, при клике открывается модальное окно с историей -->
+    <section class="stories-wrapper text-limited">
+      <h2>Наши сторис</h2>
+      <div class="stories">
+        <div class="story-card" data-story="1">
+          <img src="https://via.placeholder.com/200/FF6600/FFFFFF?text=История+1" alt="История 1">
+          <p>История 1</p>
+        </div>
+        <div class="story-card" data-story="2">
+          <img src="https://via.placeholder.com/200/3399FF/FFFFFF?text=История+2" alt="История 2">
+          <p>История 2</p>
+        </div>
+        <div class="story-card" data-story="3">
+          <img src="https://via.placeholder.com/200/66CC66/FFFFFF?text=История+3" alt="История 3">
+          <p>История 3</p>
+        </div>
       </div>
+    </section>
+    
+    <!-- Модальные окна для сторис -->
+    <div class="story-modal" id="storyModal1">
+      <div class="story-modal-content">
+        <span class="close-modal">&times;</span>
+        <h3>История №1</h3>
+        <p>Краткая история о том, как мы открыли первый центр аддитивных технологий.</p>
+      </div>
+    </div>
+    <div class="story-modal" id="storyModal2">
+      <div class="story-modal-content">
+        <span class="close-modal">&times;</span>
+        <h3>История №2</h3>
+        <p>Путешествие в мир промышленного дизайна: от идеи до прототипа.</p>
+      </div>
+    </div>
+    <div class="story-modal" id="storyModal3">
+      <div class="story-modal-content">
+        <span class="close-modal">&times;</span>
+        <h3>История №3</h3>
+        <p>Как мы пришли к созданию Step3D.Lab и поделились знаниями с миром.</p>
+      </div>
+    </div>
+    
+    <!-- Раздел Telegram-канала -->
+    <section class="projects text-limited">
+      <h2>Наш Telegram-канал</h2>
+      <div class="project-item">
+        <h3>Step3D.Lab в Telegram</h3>
+        <p>
+          Подписывайтесь на наш Telegram-канал, где мы делимся новостями, статьями и идеями. Узнайте всё про <em>htmlcssretro</em> и современные технологии!
+        </p>
+        <div class="tags">
+          <span>#htmlcssretro</span>
+        </div>
+        <p>Присоединяйтесь: <a href="https://t.me/STEP_3D_Lab" target="_blank">https://t.me/STEP_3D_Lab</a></p>
+      </div>
+    </section>
+    
+    <!-- Раздел статей -->
+    <section class="articles text-limited">
+      <h2>Последние статьи</h2>
+      <div class="article-preview">
+        <h3><a href="article.html">Основы HTML</a></h3>
+        <p>Как создать самый простой HTML-файл? Разбираемся с тэгами и структурой.</p>
+        <small>Dec 18, 2024 • 4 мин чтения</small>
+      </div>
+      <!-- Дополнительные статьи можно добавить -->
     </section>
   </main>
   
+  <!-- Подвал -->
   <footer class="site-footer text-limited">
     <p>© 2025 Step3D.Lab. All rights reserved.</p>
+    <p class="quote">"The symphony of silence plays best when butterflies wear tiny boots."</p>
   </footer>
   
+  <!-- Canvas-анимация -->
   <div class="canvas-container">
     <canvas id="mouseEffectCanvas"></canvas>
   </div>
   
+  <!-- Скрипты -->
   <script>
     /* Тема */
     const body = document.body;
@@ -115,7 +201,7 @@
       localStorage.setItem('theme', isLight ? 'light' : 'dark');
     });
     
-    /* Canvas */
+    /* Canvas-анимация */
     const canvas = document.getElementById('mouseEffectCanvas');
     const ctx = canvas.getContext('2d');
     let w, h;
@@ -179,6 +265,31 @@
       }
     }
     animate();
+    
+    /* Сторис-модалки */
+    const storyCards = document.querySelectorAll('.story-card');
+    const modals = {
+      1: document.getElementById('storyModal1'),
+      2: document.getElementById('storyModal2'),
+      3: document.getElementById('storyModal3')
+    };
+    storyCards.forEach(card => {
+      card.addEventListener('click', () => {
+        const storyId = card.dataset.story;
+        modals[storyId].style.display = 'block';
+      });
+    });
+    const closeButtons = document.querySelectorAll('.close-modal');
+    closeButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        btn.closest('.story-modal').style.display = 'none';
+      });
+    });
+    window.addEventListener('click', (e) => {
+      if (e.target.classList.contains('story-modal')) {
+        e.target.style.display = 'none';
+      }
+    });
   </script>
 </body>
 </html>
