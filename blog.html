@@ -3,115 +3,67 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Retro Blog — Блог</title>
+  <title>Step3D — Блог</title>
+
   <link rel="stylesheet" href="css/style.css" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;700&display=swap&subset=cyrillic" 
-        rel="stylesheet">
+  <link 
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap&subset=cyrillic" 
+    rel="stylesheet"
+  >
 </head>
 <body>
-  <header class="site-header">
+  <header class="site-header sticky-header">
     <nav class="navbar">
       <div class="logo">
-        <a href="index.html">Retro<span>Blog</span></a>
+        <a href="index.html">Step<span>3D</span></a>
       </div>
       <ul class="nav-links">
         <li><a href="index.html">home</a></li>
-        <li><a href="courses.html">courses</a></li>
+        <li class="dropdown">
+          <a href="courses.html" class="dropbtn">courses ▾</a>
+          <div class="dropdown-content">
+            <a href="courses.html#R22_02">R22_02 Reverse Eng.</a>
+            <a href="courses.html#html-course">HTML/CSS Basics</a>
+            <a href="courses.html#other-courses">Другие курсы</a>
+          </div>
+        </li>
         <li><a href="blog.html" class="active">blog</a></li>
+        <li><a href="about.html">about</a></li>
       </ul>
-      <button id="theme-toggle" class="theme-toggle">Смена темы</button>
+      <div class="theme-toggle" id="theme-toggle" title="Переключить тему">
+        <span class="theme-icon" id="theme-icon"></span>
+      </div>
     </nav>
   </header>
 
   <main class="container">
-    <section class="articles-list">
+    <section class="articles-list text-limited">
       <h1>Статьи</h1>
+
       <article class="article-preview">
         <h2><a href="article.html">Основы HTML</a></h2>
         <p>Как создать самый простой HTML-файл? Разбираемся с тэгами и структурой.</p>
         <small>Dec 18, 2024 • 4 мин</small>
       </article>
+
       <article class="article-preview">
         <h2><a href="article.html">Что такое CSS и как им пользоваться?</a></h2>
         <p>Быстро разбираем базовую концепцию каскадных таблиц стилей.</p>
         <small>Jan 05, 2025 • 5 мин</small>
       </article>
+
+      <!-- Добавляйте нужные статьи -->
     </section>
   </main>
 
-  <footer class="site-footer">
-    <p>© 2025 Retro Blog. All rights reserved.</p>
+  <footer class="site-footer text-limited">
+    <p>© 2025 Step3D. All rights reserved.</p>
   </footer>
 
-  <!-- Аналогично можно добавить анимацию canvas, если хотите -->
   <div class="canvas-container">
     <canvas id="mouseEffectCanvas"></canvas>
   </div>
-  <script>
-    /* Переключение темы */
-    const themeToggleBtn = document.getElementById('theme-toggle');
-    themeToggleBtn.addEventListener('click', () => {
-      document.body.classList.toggle('light');
-    });
-
-    /* Анимация canvas */
-    const canvas = document.getElementById('mouseEffectCanvas');
-    const ctx = canvas.getContext('2d');
-    let w, h;
-
-    function resizeCanvas() {
-      w = canvas.width = canvas.offsetWidth;
-      h = canvas.height = canvas.offsetHeight;
-    }
-    window.addEventListener('resize', resizeCanvas);
-    resizeCanvas();
-
-    const particles = [];
-    class Particle {
-      constructor(x, y) {
-        this.x = x;
-        this.y = y;
-        this.radius = Math.random() * 8 + 2;
-        this.alpha = 1;
-        this.speedX = (Math.random() - 0.5) * 2;
-        this.speedY = (Math.random() - 0.5) * 2;
-      }
-      update() {
-        this.x += this.speedX;
-        this.y += this.speedY;
-        this.alpha -= 0.01;
-      }
-      draw() {
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(243, 86, 38, ${this.alpha})`;
-        ctx.fill();
-      }
-    }
-
-    canvas.addEventListener('mousemove', (e) => {
-      const rect = canvas.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      for (let i = 0; i < 3; i++) {
-        particles.push(new Particle(x, y));
-      }
-    });
-
-    function animate() {
-      requestAnimationFrame(animate);
-      ctx.clearRect(0, 0, w, h);
-      for (let i = 0; i < particles.length; i++) {
-        particles[i].update();
-        particles[i].draw();
-        if (particles[i].alpha <= 0) {
-          particles.splice(i, 1);
-          i--;
-        }
-      }
-    }
-    animate();
-  </script>
+  <script src="js/theme_and_canvas.js"></script>
 </body>
 </html>
