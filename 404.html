@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Step3D — 404</title>
+
+  <link rel="stylesheet" href="css/style.css"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link 
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap&subset=cyrillic" 
+    rel="stylesheet"
+  >
+</head>
+<body>
+  <header class="site-header sticky-header">
+    <nav class="navbar">
+      <div class="logo">
+        <a href="index.html">Step<span>3D</span></a>
+      </div>
+      <ul class="nav-links">
+        <li><a href="index.html">home</a></li>
+        <li><a href="courses.html">courses</a></li>
+        <li><a href="blog.html">blog</a></li>
+        <li><a href="about.html">about</a></li>
+      </ul>
+      <div class="theme-toggle" id="theme-toggle" title="Переключить тему">
+        <span class="theme-icon" id="theme-icon"></span>
+      </div>
+    </nav>
+  </header>
+
+  <main class="container text-limited">
+    <section class="not-found">
+      <h1>404 — Страница не найдена</h1>
+      <p>Кажется, вы зашли не туда...</p>
+      <a href="index.html" class="btn">Вернуться на главную</a>
+    </section>
+  </main>
+
+  <div class="canvas-container">
+    <canvas id="mouseEffectCanvas"></canvas>
+  </div>
+
+  <script src="js/theme_and_canvas.js"></script>
+</body>
+</html>
