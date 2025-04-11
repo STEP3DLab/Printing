@@ -1,206 +1,136 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Step3D — Главная</title>
-
-  <!-- Подключаем стили -->
-  <link rel="stylesheet" href="css/style.css" />
-  <!-- Подключаем Montserrat (display=swap для ускорения) -->
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link 
-    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap&subset=cyrillic"
-    rel="stylesheet"
-  >
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Fluent Design Cube</title>
+  <!-- Three.js from CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <style>
+    /* Reset and basic styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body, html {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background-color: #f3f3f3;  /* Light, clean theme */
+      color: #333;
+    }
+    /* Canvas fills the screen */
+    #scene-canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+    /* Overlay for text – translucent glass style */
+    .overlay {
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 15px 25px;
+      background: rgba(255, 255, 255, 0.6);
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      backdrop-filter: blur(10px);
+      z-index: 10;
+    }
+    .overlay p {
+      font-size: 1.5em;
+      text-align: center;
+      margin: 0;
+    }
+    /* Responsive typography */
+    @media (max-width: 480px) {
+      .overlay p {
+        font-size: 1.2em;
+      }
+    }
+  </style>
 </head>
 <body>
-  <!-- Шапка сайта (sticky-header) -->
-  <header class="site-header sticky-header">
-    <nav class="navbar">
-      <!-- Логотип -->
-      <div class="logo">
-        <a href="index.html">Step<span>3D</span></a>
-      </div>
-
-      <!-- Навигация (примеры ссылок) -->
-      <ul class="nav-links">
-        <li><a href="index.html" class="active">home</a></li>
-        <!-- Пример dropdown (courses) -->
-        <li class="dropdown">
-          <a href="courses.html" class="dropbtn">courses ▾</a>
-          <div class="dropdown-content">
-            <a href="courses.html#R22_02">R22_02 Reverse Eng.</a>
-            <a href="courses.html#html-course">HTML/CSS Basics</a>
-            <a href="courses.html#other-courses">Другие курсы</a>
-          </div>
-        </li>
-        <li><a href="blog.html">blog</a></li>
-        <li><a href="about.html">about</a></li>
-      </ul>
-
-      <!-- Кнопка переключения темы -->
-      <div class="theme-toggle" id="theme-toggle" title="Переключить тему">
-        <span class="theme-icon" id="theme-icon"></span>
-      </div>
-    </nav>
-  </header>
-
-  <!-- Основной контент -->
-  <main class="container">
-    <!-- Hero-секция -->
-    <section class="hero text-limited">
-      <!-- lazy-loading для аватара -->
-      <img 
-        src="https://github.com/STEP3DLab/Printing/blob/main/images/avatar.png?raw=true"
-        alt="Avatar"
-        class="avatar"
-        loading="lazy"
-      />
-      <h1>Добро пожаловать в Step3D!</h1>
-      <p>Здесь вы найдёте информацию о наших курсах, статьях и других проектах. 
-         Мы продвигаем аддитивные технологии, реверсивный инжиниринг и промышленный дизайн.</p>
-    </section>
-
-    <!-- CTA-блок -->
-    <section class="cta-block">
-      <h2>Хотите узнать больше?</h2>
-      <p>Скачайте нашу брошюру обо всех программах Step3D.</p>
-      <!-- Пример кнопки (можно поменять ссылку) -->
-      <a href="brochure.pdf" class="btn cta-btn" download>Скачать брошюру (PDF)</a>
-    </section>
-
-    <!-- Раздел проектов -->
-    <section class="projects text-limited">
-      <h2>Проекты</h2>
-      <div class="project-item">
-        <h3>Retro Website</h3>
-        <p>Классический «ретро»-стиль веб-дизайна. Пример использования HTML/CSS с неоновой палитрой.</p>
-        <div class="tags">
-          <span>html</span><span>css</span><span>retro</span>
-        </div>
-      </div>
-      <!-- Можно добавить другие проекты -->
-    </section>
-
-    <!-- Раздел статей -->
-    <section class="articles text-limited">
-      <h2>Последние статьи</h2>
-      <div class="article-preview">
-        <h3><a href="article.html">Основы HTML</a></h3>
-        <p>Как создать самый простой HTML-файл? Разбираемся с тэгами и структурой.</p>
-        <small>Dec 18, 2024 • 4 мин чтения</small>
-      </div>
-      <!-- Добавляйте дополнительные статьи -->
-    </section>
-  </main>
-
-  <!-- Подвал сайта -->
-  <footer class="site-footer text-limited">
-    <p>© 2025 Step3D. All rights reserved.</p>
-    <p class="quote">"The symphony of silence plays best when butterflies wear tiny boots."</p>
-  </footer>
-
-  <!-- Контейнер для анимации (canvas) в самом низу -->
-  <div class="canvas-container">
-    <canvas id="mouseEffectCanvas"></canvas>
+  <!-- Overlaid Russian poetry -->
+  <div class="overlay">
+    <p>Не жалею, не зову, не плачу...</p>
   </div>
+  <!-- Canvas for Three.js scene -->
+  <canvas id="scene-canvas"></canvas>
 
-  <!-- Скрипты: переключение темы + анимация -->
   <script>
-    /* ====== Переключение темы с сохранением в localStorage ====== */
-    const body = document.body;
-    const themeToggleBtn = document.getElementById('theme-toggle');
-    const themeIcon = document.getElementById('theme-icon');
+    // Set up basic Three.js scene, camera, and renderer.
+    const canvas = document.getElementById('scene-canvas');
+    const renderer = new THREE.WebGLRenderer({canvas, antialias: true, alpha: true});
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(window.devicePixelRatio);
 
-    // Смотрим, не сохранена ли тема раньше
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme) {
-      body.classList.toggle('light', savedTheme === 'light');
-      themeIcon.textContent = savedTheme === 'light' ? '🌙' : '☀️';
-    } else {
-      // Если ничего не сохранено, пусть по умолчанию будет тёмная
-      themeIcon.textContent = '☀️';
-    }
+    const scene = new THREE.Scene();
+    // Use a light background color in the scene to complement the Fluent Design aesthetic.
+    scene.background = new THREE.Color(0xf3f3f3);
 
-    // При клике меняем класс
-    themeToggleBtn.addEventListener('click', () => {
-      body.classList.toggle('light');
-      const isLight = body.classList.contains('light');
-      themeIcon.textContent = isLight ? '🌙' : '☀️';
-      localStorage.setItem('theme', isLight ? 'light' : 'dark');
+    const camera = new THREE.PerspectiveCamera(45, window.innerWidth/window.innerHeight, 0.1, 1000);
+    camera.position.z = 5;
+
+    // Add ambient and directional light for soft shadows.
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
+    scene.add(ambientLight);
+
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
+    directionalLight.position.set(5, 5, 5);
+    scene.add(directionalLight);
+
+    // Create a cube with a modern, slightly transparent material.
+    const geometry = new THREE.BoxGeometry();
+    const material = new THREE.MeshStandardMaterial({
+      color: 0x0078d4,
+      transparent: true,
+      opacity: 0.9,
+      roughness: 0.3,
+      metalness: 0.6
+    });
+    const cube = new THREE.Mesh(geometry, material);
+    scene.add(cube);
+
+    // Resize handler for responsiveness.
+    window.addEventListener('resize', () => {
+      const width = window.innerWidth;
+      const height = window.innerHeight;
+      renderer.setSize(width, height);
+      camera.aspect = width / height;
+      camera.updateProjectionMatrix();
     });
 
-    /* ====== Canvas-анимация под футером ====== */
-    const canvas = document.getElementById('mouseEffectCanvas');
-    const ctx = canvas.getContext('2d');
-    let w, h;
+    // Variables for mouse-driven rotation.
+    let targetRotationX = 0;
+    let targetRotationY = 0;
 
-    function resizeCanvas() {
-      w = canvas.width = canvas.offsetWidth;
-      h = canvas.height = canvas.offsetHeight;
-    }
-    window.addEventListener('resize', resizeCanvas);
-    resizeCanvas();
-
-    const particles = [];
-    class Particle {
-      constructor(x, y, color='243,86,38') {
-        this.x = x;
-        this.y = y;
-        this.radius = Math.random() * 8 + 2;
-        this.alpha = 1;
-        this.speedX = (Math.random() - 0.5) * 2;
-        this.speedY = (Math.random() - 0.5) * 2;
-        this.color = color;
-      }
-      update() {
-        this.x += this.speedX;
-        this.y += this.speedY;
-        this.alpha -= 0.01;
-      }
-      draw() {
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(${this.color}, ${this.alpha})`;
-        ctx.fill();
-      }
-    }
-
-    // Создаем частицы при движении мыши
-    canvas.addEventListener('mousemove', (e) => {
-      // Чтобы не перегружать мобильные
-      if (window.innerWidth < 768) return;
-      const rect = canvas.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      for (let i = 0; i < 3; i++) {
-        particles.push(new Particle(x, y));
-      }
+    // Mouse move event to adjust cube rotation.
+    document.addEventListener('mousemove', (event) => {
+      // Normalize mouse coordinates (-1 to +1)
+      const mouseX = (event.clientX / window.innerWidth) * 2 - 1;
+      const mouseY = (event.clientY / window.innerHeight) * 2 - 1;
+      // Adjust target rotations (tweak multipliers for effect strength)
+      targetRotationY = mouseX * 0.5;
+      targetRotationX = mouseY * 0.5;
     });
 
-    // При клике — частицы другого цвета (для «вау»-эффекта)
-    canvas.addEventListener('click', (e) => {
-      if (window.innerWidth < 768) return;
-      const rect = canvas.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      for (let i = 0; i < 5; i++) {
-        particles.push(new Particle(x, y, '0,200,255'));
-      }
+    // Scroll event to add subtle rotation on scroll.
+    window.addEventListener('scroll', () => {
+      // Change the cube rotation based on the scroll position (just an example)
+      targetRotationY += window.scrollY * 0.0005;
     });
 
+    // Animation loop
     function animate() {
       requestAnimationFrame(animate);
-      ctx.clearRect(0, 0, w, h);
-      for (let i = 0; i < particles.length; i++) {
-        particles[i].update();
-        particles[i].draw();
-        if (particles[i].alpha <= 0) {
-          particles.splice(i, 1);
-          i--;
-        }
-      }
+      // Gradually move cube's rotation to target for smooth transitions.
+      cube.rotation.x += (targetRotationX - cube.rotation.x) * 0.05;
+      cube.rotation.y += (targetRotationY - cube.rotation.y) * 0.05;
+      renderer.render(scene, camera);
     }
     animate();
   </script>
