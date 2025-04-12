@@ -2,137 +2,226 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Fluent Design Cube</title>
-  <!-- Three.js from CDN -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <title>Пример с 3D-кубом и фейерверком</title>
   <style>
-    /* Reset and basic styles */
-    * {
+    body {
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
-    }
-    body, html {
-      width: 100%;
-      height: 100%;
+      background: #f0f0f0;
+      font-family: sans-serif;
+      transition: background-color 0.5s;
       overflow: hidden;
-      font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-      background-color: #f3f3f3;  /* Light, clean theme */
-      color: #333;
     }
-    /* Canvas fills the screen */
-    #scene-canvas {
-      display: block;
-      width: 100%;
-      height: 100%;
+
+    /* Контейнер для сцены с 3D-кубом */
+    .scene {
+      width: 300px;
+      height: 300px;
+      margin: 30px auto;
+      perspective: 800px;
+      position: relative;
     }
-    /* Overlay for text – translucent glass style */
-    .overlay {
+
+    /* Сам куб */
+    .cube {
+      width: 300px;
+      height: 300px;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.1s;
+    }
+
+    /* Каждая грань куба */
+    .cube-face {
       position: absolute;
-      top: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      padding: 15px 25px;
-      background: rgba(255, 255, 255, 0.6);
-      border-radius: 8px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-      backdrop-filter: blur(10px);
-      z-index: 10;
-    }
-    .overlay p {
-      font-size: 1.5em;
+      width: 300px;
+      height: 300px;
+      line-height: 300px;
+      font-size: 24px;
+      font-weight: bold;
       text-align: center;
-      margin: 0;
+      color: #fff;
+      background: #333;
+      opacity: 0.9;
+      border: 2px solid #000;
     }
-    /* Responsive typography */
-    @media (max-width: 480px) {
-      .overlay p {
-        font-size: 1.2em;
-      }
+
+    .cube-face.front  { transform: rotateY(   0deg) translateZ(150px); }
+    .cube-face.back   { transform: rotateY( 180deg) translateZ(150px); }
+    .cube-face.right  { transform: rotateY(  90deg) translateZ(150px); }
+    .cube-face.left   { transform: rotateY( -90deg) translateZ(150px); }
+    .cube-face.top    { transform: rotateX(  90deg) translateZ(150px); }
+    .cube-face.bottom { transform: rotateX( -90deg) translateZ(150px); }
+
+    /* Стих и кнопка */
+    .content {
+      width: 70%;
+      margin: 20px auto;
+      text-align: center;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    /* Канвас для фейерверка (изначально скрыт) */
+    #fireworks {
+      display: none;
+      position: absolute;
+      top: 0;
+      left: 0;
     }
   </style>
 </head>
 <body>
-  <!-- Overlaid Russian poetry -->
-  <div class="overlay">
-    <p>Не жалею, не зову, не плачу...</p>
+
+  <div class="scene">
+    <div class="cube" id="cube">
+      <div class="cube-face front">Front</div>
+      <div class="cube-face back">Back</div>
+      <div class="cube-face right">Right</div>
+      <div class="cube-face left">Left</div>
+      <div class="cube-face top">Top</div>
+      <div class="cube-face bottom">Bottom</div>
+    </div>
   </div>
-  <!-- Canvas for Three.js scene -->
-  <canvas id="scene-canvas"></canvas>
+
+  <div class="content" id="content">
+    <h2>Сергей Есенин</h2>
+    <p>
+      Гой ты, Русь, моя родная,<br>
+      Хаты – в ризах образа…<br>
+      Не видать конца и края –<br>
+      Только синь сосёт глаза…<br><br>
+      <em>(Отрывок из стихотворения «Гой ты, Русь, моя родная…»)</em>
+    </p>
+    <button id="thanksBtn">Спасибо за внимание</button>
+  </div>
+
+  <!-- Канвас для фейерверка -->
+  <canvas id="fireworks"></canvas>
 
   <script>
-    // Set up basic Three.js scene, camera, and renderer.
-    const canvas = document.getElementById('scene-canvas');
-    const renderer = new THREE.WebGLRenderer({canvas, antialias: true, alpha: true});
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setPixelRatio(window.devicePixelRatio);
+    // ==================
+    // 1) Вращение куба
+    // ==================
+    const cube = document.getElementById('cube');
 
-    const scene = new THREE.Scene();
-    // Use a light background color in the scene to complement the Fluent Design aesthetic.
-    scene.background = new THREE.Color(0xf3f3f3);
+    document.addEventListener('mousemove', (e) => {
+      // Получаем центр экрана (примерно)
+      const halfWidth = window.innerWidth / 2;
+      const halfHeight = window.innerHeight / 2;
 
-    const camera = new THREE.PerspectiveCamera(45, window.innerWidth/window.innerHeight, 0.1, 1000);
-    camera.position.z = 5;
+      // Смещение мыши относительно центра
+      const offsetX = e.clientX - halfWidth;
+      const offsetY = e.clientY - halfHeight;
 
-    // Add ambient and directional light for soft shadows.
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
-    scene.add(ambientLight);
+      // Вычислим примерные углы поворота
+      const rotationY = offsetX * 0.1; // повернём вокруг оси Y
+      const rotationX = -offsetY * 0.1; // повернём вокруг оси X
 
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
-    directionalLight.position.set(5, 5, 5);
-    scene.add(directionalLight);
-
-    // Create a cube with a modern, slightly transparent material.
-    const geometry = new THREE.BoxGeometry();
-    const material = new THREE.MeshStandardMaterial({
-      color: 0x0078d4,
-      transparent: true,
-      opacity: 0.9,
-      roughness: 0.3,
-      metalness: 0.6
-    });
-    const cube = new THREE.Mesh(geometry, material);
-    scene.add(cube);
-
-    // Resize handler for responsiveness.
-    window.addEventListener('resize', () => {
-      const width = window.innerWidth;
-      const height = window.innerHeight;
-      renderer.setSize(width, height);
-      camera.aspect = width / height;
-      camera.updateProjectionMatrix();
+      // Применяем трансформацию
+      cube.style.transform = `rotateX(${rotationX}deg) rotateY(${rotationY}deg)`;
     });
 
-    // Variables for mouse-driven rotation.
-    let targetRotationX = 0;
-    let targetRotationY = 0;
+    // =====================
+    // 2) Логика с кнопкой
+    // =====================
+    const content = document.getElementById('content');
+    const thanksBtn = document.getElementById('thanksBtn');
+    const fireworksCanvas = document.getElementById('fireworks');
+    let ctx;
 
-    // Mouse move event to adjust cube rotation.
-    document.addEventListener('mousemove', (event) => {
-      // Normalize mouse coordinates (-1 to +1)
-      const mouseX = (event.clientX / window.innerWidth) * 2 - 1;
-      const mouseY = (event.clientY / window.innerHeight) * 2 - 1;
-      // Adjust target rotations (tweak multipliers for effect strength)
-      targetRotationY = mouseX * 0.5;
-      targetRotationX = mouseY * 0.5;
-    });
+    // Функция, которая запускается через 3 секунды и показывает фейерверк
+    function showFireworks() {
+      fireworksCanvas.style.display = 'block';
+      fireworksCanvas.width = window.innerWidth;
+      fireworksCanvas.height = window.innerHeight;
+      ctx = fireworksCanvas.getContext('2d');
 
-    // Scroll event to add subtle rotation on scroll.
-    window.addEventListener('scroll', () => {
-      // Change the cube rotation based on the scroll position (just an example)
-      targetRotationY += window.scrollY * 0.0005;
-    });
-
-    // Animation loop
-    function animate() {
-      requestAnimationFrame(animate);
-      // Gradually move cube's rotation to target for smooth transitions.
-      cube.rotation.x += (targetRotationX - cube.rotation.x) * 0.05;
-      cube.rotation.y += (targetRotationY - cube.rotation.y) * 0.05;
-      renderer.render(scene, camera);
+      // Запустим анимацию фейерверка
+      startFireworksAnimation();
     }
-    animate();
+
+    // Нажатие на кнопку
+    thanksBtn.addEventListener('click', () => {
+      // Удаляем контент
+      document.body.innerHTML = '';
+      // Задаём чёрный фон
+      document.body.style.backgroundColor = '#000';
+
+      // Через 3 секунды показываем фейерверк
+      setTimeout(() => {
+        // Вставим снова canvas в body (иначе он удалится вместе с body.innerHTML)
+        document.body.appendChild(fireworksCanvas);
+        showFireworks();
+      }, 3000);
+    });
+
+    // ========================
+    // 3) Простой фейерверк
+    // ========================
+    // Для простоты – несколько «вспышек» в случайных местах
+    let fireworksArray = [];
+    let animationFrame;
+
+    // Создаём частицы (каждая вспышка – набор частиц)
+    function createFirework() {
+      const x = Math.random() * fireworksCanvas.width;
+      const y = Math.random() * fireworksCanvas.height * 0.5; // только в верхней части
+      const particleCount = 30 + Math.random() * 50;
+
+      const particles = [];
+      for (let i = 0; i < particleCount; i++) {
+        particles.push({
+          x: x,
+          y: y,
+          angle: Math.random() * 2 * Math.PI,
+          speed: 2 + Math.random() * 3,
+          radius: 2 + Math.random() * 2,
+          alpha: 1
+        });
+      }
+      fireworksArray.push(particles);
+    }
+
+    // Анимируем частицы
+    function updateFireworks() {
+      ctx.clearRect(0, 0, fireworksCanvas.width, fireworksCanvas.height);
+      fireworksArray.forEach((particles, index) => {
+        particles.forEach((p) => {
+          // Движение
+          p.x += Math.cos(p.angle) * p.speed;
+          p.y += Math.sin(p.angle) * p.speed;
+          // Гашение «взрывов»
+          p.alpha -= 0.01;
+          // Рисуем частицу
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.radius, 0, 2 * Math.PI);
+          ctx.fillStyle = `rgba(255, 255, 0, ${p.alpha})`;
+          ctx.fill();
+        });
+        // Удаляем ослабшие взрывы
+        fireworksArray[index] = particles.filter((p) => p.alpha > 0);
+      });
+      // Удаляем пустые массивы
+      fireworksArray = fireworksArray.filter((p) => p.length > 0);
+    }
+
+    // Основной цикл анимации
+    function animate() {
+      updateFireworks();
+      animationFrame = requestAnimationFrame(animate);
+    }
+
+    // Каждые полсекунды создаём новый «запуск» фейерверка
+    function startFireworksAnimation() {
+      setInterval(createFirework, 500);
+      animate();
+    }
   </script>
 </body>
 </html>
